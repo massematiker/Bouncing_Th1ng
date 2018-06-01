@@ -316,34 +316,12 @@ public class BouncingGame extends Activity {
                 canvas = ourHolder.lockCanvas();
 
                 background = createScaledBitmap(background,screenX,screenY,false);
-                //paddlepic = createScaledBitmap(paddlepic,paddle.getRect())
+               // paddlepic = createScaledBitmap(paddlepic,paddle.)
 
+                // Draw the background
                 canvas.drawColor(Color.WHITE);
                 canvas.drawBitmap(background, (0), (0), null);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // Draw the background color
-                //canvas.drawColor(Color.argb(255,  26, 128, 182));
 
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
@@ -358,13 +336,13 @@ public class BouncingGame extends Activity {
                 // Change the brush color for drawing
                 paint.setColor(Color.argb(255,  249, 129, 0));
 
-      /*          // Draw the obstacles if visible
+                // Draw the obstacles if visible
                 for(int i = 0; i < numObstacles; i++){
                     if(obstacles[i].getVisibility()) {
                         canvas.drawRect(obstacles[i].getRect(), paint);
                     }
                 }
-*/
+
                 // Draw the HUD
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
@@ -423,6 +401,8 @@ public class BouncingGame extends Activity {
                 case MotionEvent.ACTION_DOWN:
 
                     paused = false;
+
+
 
                     if(motionEvent.getX() > screenX / 2){
                         paddle.setMovementState(paddle.RIGHT);

@@ -59,6 +59,13 @@ public class Paddle {
         paddleMoving = state;
     }
 
+    public float getX(){
+        return x;
+    }
+    public float getY(){
+        return y;
+    }
+
     // This update method will be called from update in BreakoutView
     // It determines if the paddle needs to move and changes the coordinates
     // contained in rect if necessary
