@@ -245,13 +245,6 @@ public class BouncingGame extends Activity {
                 if (obstacles[i].getVisibility()){
                     obstacles[i].update(fps);
 
-                    for(Obstacle obstacle: obstacles){
-                      //  if(RectF.intersects(obstacles[i].getRect(),obstacle.getRect())) {
-                      //      obstacles[i].changeDirection();
-                      //      obstacle.changeDirection();
-                      //  }
-                    }
-
                     if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
                         obstacles[i].setInvisible();
                         ball.reverseYVelocity();
@@ -305,6 +298,12 @@ public class BouncingGame extends Activity {
                 ball.reverseXVelocity();
                 ball.clearObstacleX(screenX - 22);
                 soundPool.play(beep3ID, 1, 1, 0, 0, 1);
+            }
+
+            // If obstacle collides with left
+            for(int i=0;i< numObstacles;i++){
+                if(obstacles[i].getRect().left <0 ) obstacles[i].setObstacleMoving(2);
+                if(obstacles[i].getRect().right > screenX ) obstacles[i].setObstacleMoving(1);
             }
 
             // Pause if cleared screen
