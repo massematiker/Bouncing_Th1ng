@@ -27,6 +27,8 @@ public class Paddle {
     // Is the paddle moving and in which direction
     private int paddleMoving = STOPPED;
 
+    private int screenX;
+
     // This the the constructor method
     // When we create an object from this class we will pass
     // in the screen width and height
@@ -38,6 +40,7 @@ public class Paddle {
         // Start paddle in roughly the sceen centre
         x = screenX / 2;
         y = screenY - 20;
+        this.screenX = screenX;
 
         rect = new RectF(x, y, x + length, y + height);
 
@@ -60,11 +63,11 @@ public class Paddle {
     // It determines if the paddle needs to move and changes the coordinates
     // contained in rect if necessary
     public void update(long fps){
-        if(paddleMoving == LEFT){
+        if(paddleMoving == LEFT && x > 0){
             x = x - paddleSpeed / fps;
         }
 
-        if(paddleMoving == RIGHT){
+        if(paddleMoving == RIGHT  && x< screenX - length){
             x = x + paddleSpeed / fps;
         }
 

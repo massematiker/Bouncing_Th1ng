@@ -299,7 +299,6 @@ public class BouncingGame extends Activity {
 
                 // Draw the background color
                 canvas.drawColor(Color.argb(255,  26, 128, 182));
-
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
 
@@ -376,6 +375,8 @@ public class BouncingGame extends Activity {
                 case MotionEvent.ACTION_DOWN:
 
                     paused = false;
+
+
 
                     if(motionEvent.getX() > screenX / 2){
                         paddle.setMovementState(paddle.RIGHT);
