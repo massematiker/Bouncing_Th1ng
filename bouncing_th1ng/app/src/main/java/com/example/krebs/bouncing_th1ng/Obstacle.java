@@ -13,16 +13,29 @@ public class Obstacle {
     private float bottom;
     private float right;
     private float width;
+
+    public float getWidth() {
+        return width;
+    }
+
     private float height;
 
     private int screenX;
 
+<<<<<<< HEAD
     // Which ways can the obstacles move
+=======
+    // Which ways can the Obstacle move
+>>>>>>> 0f6990ff454bb559d3589d98acbf8c31f9849054
     public final int STOPPED = 0;
     public final int LEFT = 1;
     public final int RIGHT = 2;
     public final int UP = 3;
     public final int DOWN = 4;
+
+    public void setObstacleMoving(int obstacleMoving) {
+        this.obstacleMoving = obstacleMoving;
+    }
 
     // Is the paddle moving and in which direction
     private int obstacleMoving = UP;
@@ -34,7 +47,7 @@ public class Obstacle {
         isVisible = true;
         int padding = 1;
 
-        obstacleMoving = (int)((Math.random() * 100) % 5);
+        obstacleMoving = (int)((Math.random() * 100) % 3);
 
 
         left=column * width + padding;
@@ -64,9 +77,14 @@ public class Obstacle {
         return isVisible;
     }
 
+    public int getObstacleMoving() {
+        return obstacleMoving;
+    }
+
     public void update(long fps){
 
         float length = right -left;
+
 
         if(obstacleMoving == LEFT ){
             left = left - obstacleSpeed / fps;
@@ -92,21 +110,7 @@ public class Obstacle {
         rect.right = right;
         rect.top = top;
         rect.bottom = bottom;
-        System.out.println(rect);
-        // rect.right = left + length;
+
     }
 
-    public void changeDirection(){
-        switch(obstacleMoving){
-            case STOPPED: break;
-            case LEFT:  obstacleMoving = RIGHT;
-                        break;
-            case RIGHT: obstacleMoving = LEFT;
-                        break;
-            case UP:    obstacleMoving = DOWN;
-                        break;
-            case DOWN:  obstacleMoving = UP;
-                        break;
-        }
-    }
 }
