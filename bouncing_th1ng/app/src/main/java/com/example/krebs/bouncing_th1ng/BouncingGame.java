@@ -173,6 +173,9 @@ public class BouncingGame extends Activity {
             for(int column = 0; column < 8; column ++ ){
                 for(int row = 0; row < 3; row ++ ){
                     obstacles[numObstacles] = new Obstacle(row, column, brickWidth, brickHeight);
+
+                    if(Math.random()*100 <50)
+                        obstacles[numObstacles].setInvisible();
                     numObstacles ++;
                 }
             }
@@ -222,6 +225,14 @@ public class BouncingGame extends Activity {
             for(int i = 0; i < numObstacles; i++){
 
                 if (obstacles[i].getVisibility()){
+                    obstacles[i].update(fps);
+
+                    for(Obstacle obstacle: obstacles){
+                      //  if(RectF.intersects(obstacles[i].getRect(),obstacle.getRect())) {
+                      //      obstacles[i].changeDirection();
+                      //      obstacle.changeDirection();
+                      //  }
+                    }
 
                     if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
                         obstacles[i].setInvisible();
