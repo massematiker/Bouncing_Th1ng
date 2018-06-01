@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -17,8 +21,13 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.RelativeLayout;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import static android.graphics.Bitmap.createScaledBitmap;
 
 public class BouncingGame extends Activity {
 
@@ -37,6 +46,8 @@ public class BouncingGame extends Activity {
 
     }
 
+
+
     // Here is our implementation of GameView
     // It is an inner class.
     // Note how the final closing curly brace }
@@ -45,6 +56,9 @@ public class BouncingGame extends Activity {
     // Notice we implement runnable so we have
     // A thread and can override the run method.
     class BouncingView extends SurfaceView implements Runnable {
+
+        Bitmap background;
+        Bitmap paddlepic;
 
         // This is our thread
         Thread gameThread = null;
@@ -105,6 +119,11 @@ public class BouncingGame extends Activity {
             // SurfaceView class to set up our object.
             // How kind.
             super(context);
+
+            // Bitmap initialisieren
+            background = BitmapFactory.decodeResource(getResources(), R.drawable.road);
+            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.wall);
+
 
             // Initialize ourHolder and paint objects
             ourHolder = getHolder();
@@ -181,6 +200,7 @@ public class BouncingGame extends Activity {
             lives = 3;
         }//createObstaclesAndRestart
 
+
         @Override
         public void run() {
             while (playing) {
@@ -208,8 +228,6 @@ public class BouncingGame extends Activity {
             }
 
         }
-
-
 
         // Everything that needs to be updated goes in here
         // Movement, collision detection etc.
@@ -297,11 +315,39 @@ public class BouncingGame extends Activity {
                 // Lock the canvas ready to draw
                 canvas = ourHolder.lockCanvas();
 
+                background = createScaledBitmap(background,screenX,screenY,false);
+                //paddlepic = createScaledBitmap(paddlepic,paddle.getRect())
+
+                canvas.drawColor(Color.WHITE);
+                canvas.drawBitmap(background, (0), (0), null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 // Draw the background color
-                canvas.drawColor(Color.argb(255,  26, 128, 182));
+                //canvas.drawColor(Color.argb(255,  26, 128, 182));
 
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
+
 
                 // Draw the paddle
                 canvas.drawRect(paddle.getRect(), paint);
@@ -312,19 +358,20 @@ public class BouncingGame extends Activity {
                 // Change the brush color for drawing
                 paint.setColor(Color.argb(255,  249, 129, 0));
 
-                // Draw the obstacles if visible
+      /*          // Draw the obstacles if visible
                 for(int i = 0; i < numObstacles; i++){
                     if(obstacles[i].getVisibility()) {
                         canvas.drawRect(obstacles[i].getRect(), paint);
                     }
                 }
-
+*/
                 // Draw the HUD
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
 
                 // Draw the score
                 paint.setTextSize(40);
+
                 canvas.drawText("Score: " + score + "   Lives: " + lives, 10,50, paint);
 
                 // Has the player cleared the screen?

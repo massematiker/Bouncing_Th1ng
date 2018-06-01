@@ -13,7 +13,8 @@
 
         <activity android:name=".BouncingGame"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            >
 
 
             <intent-filter>
