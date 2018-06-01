@@ -51,6 +51,13 @@ public class Ball {
         }
     }
 
+    public void setXVelocity(float xVelocity){
+        this.xVelocity=xVelocity;
+    }
+    public void setYVelocity(float yVelocity){
+        this.yVelocity=yVelocity;
+    }
+
     public void clearObstacleY(float y){
         rect.bottom = y;
         rect.top = y - ballHeight;

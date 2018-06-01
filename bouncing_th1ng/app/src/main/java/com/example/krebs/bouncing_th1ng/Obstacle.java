@@ -17,7 +17,7 @@ public class Obstacle {
 
     private int screenX;
 
-    // Which ways can the paddle move
+    // Which ways can the obstacles move
     public final int STOPPED = 0;
     public final int LEFT = 1;
     public final int RIGHT = 2;

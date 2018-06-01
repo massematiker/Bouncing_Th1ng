@@ -35,10 +35,13 @@ public class BouncingGame extends Activity {
     // It will also hold the logic of the game
     // and respond to screen touches as well
     BouncingView bouncingView;
+    long starttime = 0;
+    int playtime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        starttime = System.currentTimeMillis();
 
         // Initialize gameView and set it as the view
         bouncingView = new BouncingView(this);
@@ -122,7 +125,7 @@ public class BouncingGame extends Activity {
 
             // Bitmap initialisieren
             background = BitmapFactory.decodeResource(getResources(), R.drawable.road);
-            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.wall);
+            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.wood);
 
 
             // Initialize ourHolder and paint objects
@@ -263,7 +266,24 @@ public class BouncingGame extends Activity {
 
             // Check for ball colliding with paddle
             if(RectF.intersects(paddle.getRect(),ball.getRect())) {
-                ball.setRandomXVelocity();
+                //wenn sich paddle nicht bewegt
+                if (paddle.getpaddleMoving()==0){
+                    ball.setRandomXVelocity();
+                }
+                //wenn sich paddle nach links bewegt
+                if (paddle.getpaddleMoving()==1){
+                    if(ball.xVelocity>0){
+                        ball.reverseXVelocity();
+                    }
+                }
+                //wenn sich paddle nach rechts bewegt
+                if (paddle.getpaddleMoving()==2){
+                    if(ball.xVelocity<0){
+                        ball.reverseXVelocity();
+                    }
+                }
+
+
                 ball.reverseYVelocity();
                 ball.clearObstacleY(paddle.getRect().top - 2);
                 soundPool.play(beep1ID, 1, 1, 0, 0, 1);
@@ -302,7 +322,7 @@ public class BouncingGame extends Activity {
 
             // If the ball hits right wall bounce
             if(ball.getRect().right > screenX - 10){
-                ball.reverseXVelocity();
+                ball.setXVelocity(-200);
                 ball.clearObstacleX(screenX - 22);
                 soundPool.play(beep3ID, 1, 1, 0, 0, 1);
             }
@@ -327,7 +347,7 @@ public class BouncingGame extends Activity {
                 canvas = ourHolder.lockCanvas();
 
                 background = createScaledBitmap(background,screenX,screenY,false);
-               // paddlepic = createScaledBitmap(paddlepic,paddle.)
+                paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
 
                 // Draw the background
                 canvas.drawColor(Color.WHITE);
@@ -339,12 +359,13 @@ public class BouncingGame extends Activity {
 
 
                 // Draw the paddle
-                canvas.drawRect(paddle.getRect(), paint);
+                //canvas.drawRect(paddle.getRect(), paint);
+                canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
 
                 // Draw the ball
                 canvas.drawRect(ball.getRect(), paint);
 
-                // Change the brush color for drawing
+                // Change the obstacles color for drawing
                 paint.setColor(Color.argb(255,  249, 129, 0));
 
                 // Draw the obstacles if visible
@@ -358,10 +379,11 @@ public class BouncingGame extends Activity {
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
 
-                // Draw the score
+                // Draw the score, Lives, and Time played
                 paint.setTextSize(40);
 
-                canvas.drawText("Score: " + score + "   Lives: " + lives, 10,50, paint);
+                canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime, 10,50, paint);
+
 
                 // Has the player cleared the screen?
                 if(score == numObstacles * 10){
@@ -378,8 +400,14 @@ public class BouncingGame extends Activity {
                 // Draw everything to the screen
                 ourHolder.unlockCanvasAndPost(canvas);
             }
+            if ((System.currentTimeMillis()-starttime)/1000>playtime){
+                playtime++;
+                score++;
+                System.out.println(playtime+" Sekunden gespielt");
 
-        }
+            }
+
+        }//draw
 
         // If SimpleGameEngine Activity is paused/stopped
         // shutdown our thread.

@@ -65,6 +65,15 @@ public class Paddle {
     public float getY(){
         return y;
     }
+    public float getlength(){
+        return length;
+    }
+    public float getheight(){
+        return height;
+    }
+    public int getpaddleMoving(){
+        return paddleMoving;
+    }
 
     // This update method will be called from update in BreakoutView
     // It determines if the paddle needs to move and changes the coordinates
