@@ -24,8 +24,11 @@
             </intent-filter>
         </activity>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".GameOverActivity" />
         <activity android:name=".HauptmenueActivity"></activity>
+=======
+>>>>>>> parent of 90ada4b... 0.7
 =======
 >>>>>>> parent of 90ada4b... 0.7
     </application>
