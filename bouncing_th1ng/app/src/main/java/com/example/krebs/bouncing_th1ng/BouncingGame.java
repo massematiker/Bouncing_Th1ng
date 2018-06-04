@@ -2,6 +2,7 @@ package com.example.krebs.bouncing_th1ng;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -294,7 +295,10 @@ public class BouncingGame extends Activity {
 
                 if(lives == 0){
                     paused = true;
-                    createObstaclesAndRestart();
+                    //createObstaclesAndRestart();
+                    startActivity(new Intent(BouncingGame.this, GameOverActivity.class));
+
+
                 }
 
             }// Bounce ball from bottom
