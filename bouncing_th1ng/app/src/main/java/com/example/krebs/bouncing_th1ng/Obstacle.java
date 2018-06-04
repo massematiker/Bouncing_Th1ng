@@ -19,14 +19,11 @@ public class Obstacle {
     }
 
     private float height;
-
     private int screenX;
 
-<<<<<<< HEAD
+
     // Which ways can the obstacles move
-=======
-    // Which ways can the Obstacle move
->>>>>>> 0f6990ff454bb559d3589d98acbf8c31f9849054
+
     public final int STOPPED = 0;
     public final int LEFT = 1;
     public final int RIGHT = 2;

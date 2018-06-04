@@ -4,15 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gameover"
     tools:context=".GameOverActivity">
 
     <Button
         android:id="@+id/newgamebutton"
-        android:layout_width="161dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:
+        android:layout_marginBottom="48dp"
+        android:layout_marginStart="204dp"
         android:background="@android:color/black"
         android:text="New Game"
         android:textColor="@android:color/background_light"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="277dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/menubutton"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
+        android:layout_marginStart="336dp"
+        android:background="@android:color/black"
+        android:text="Menü"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.krebs.bouncing_th1ng;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -196,7 +197,8 @@ public class BouncingGame extends Activity {
                 for(int row = 0; row < 3; row ++ ){
                     obstacles[numObstacles] = new Obstacle(row, column, brickWidth, brickHeight);
 
-                    if(Math.random()*100 <50)
+                    //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
+                    if(Math.random()*100 < 70)
                         obstacles[numObstacles].setInvisible();
                     numObstacles ++;
                 }
@@ -294,7 +296,10 @@ public class BouncingGame extends Activity {
 
                 if(lives == 0){
                     paused = true;
-                    createObstaclesAndRestart();
+                    //createObstaclesAndRestart();
+                    startActivity(new Intent(BouncingGame.this, GameOverActivity.class));
+
+
                 }
 
             }// Bounce ball from bottom
