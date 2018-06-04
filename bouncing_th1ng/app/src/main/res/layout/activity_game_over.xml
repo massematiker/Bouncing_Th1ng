@@ -4,17 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameOverActivity"
-    android:background="@drawable/gameover">
+    tools:context=".GameOverActivity">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Game Over Motherfucker !"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="65dp" />
 
     <Button
         android:id="@+id/newgamebutton"
-        android:layout_width="161dp"
+        android:layout_width="97dp"
         android:layout_height="48dp"
-        android:
-        android:background="@android:color/black"
         android:text="New Game"
-        android:textColor="@android:color/background_light"
-        tools:layout_editor_absoluteX="216dp"
-        tools:layout_editor_absoluteY="277dp" />
+        tools:layout_editor_absoluteX="233dp"
+        tools:layout_editor_absoluteY="195dp" />
 </android.support.constraint.ConstraintLayout>
