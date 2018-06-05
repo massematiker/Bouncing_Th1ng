@@ -22,6 +22,7 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import java.io.FileInputStream;
@@ -38,6 +39,7 @@ public class BouncingGame extends Activity {
     BouncingView bouncingView;
     long starttime = 0;
     int playtime = 0;
+    int test =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +131,7 @@ public class BouncingGame extends Activity {
 
             // Bitmap initialisieren
             background = BitmapFactory.decodeResource(getResources(), R.drawable.road);
-            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.wood);
+            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.tastaturallefarben);
 
 
             // Initialize ourHolder and paint objects
@@ -190,8 +192,8 @@ public class BouncingGame extends Activity {
             // Put the ball back to the start
             ball.reset(screenX, screenY);
 
-            int brickWidth = screenX / 8;
-            int brickHeight = screenY / 20;
+            int obstacleWidth = screenX / 8;
+            int obstacleHeight = screenY / 20;
 
             // Build a wall of bricks
             numObstacles = 0;
@@ -200,7 +202,7 @@ public class BouncingGame extends Activity {
                 for(int row = 2; row < 12; row ++ ){
 
                     if(row%2 == 0){
-                        obstacles[numObstacles] = new Obstacle(row, column, brickWidth, brickHeight);
+                        obstacles[numObstacles] = new Obstacle(row, column, obstacleWidth, obstacleHeight);
                         obstacles[numObstacles].setRow(row);
                         //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
                         if(Math.random()*100 < 75)
@@ -260,7 +262,6 @@ public class BouncingGame extends Activity {
                     if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
                      //   obstacles[i].setInvisible();
                         ball.reverseYVelocity();
-                        score = score + 10;
                         soundPool.play(explodeID, 1, 1, 0, 0, 1);
                     }
                 }
@@ -315,6 +316,7 @@ public class BouncingGame extends Activity {
                 // Lose a life
                 lives --;
                 soundPool.play(loseLifeID, 1, 1, 0, 0, 1);
+                ball.makeballfaster();
 
                 if(lives == 0){
                     paused = true;
@@ -382,6 +384,12 @@ public class BouncingGame extends Activity {
                 //canvas.drawRect(paddle.getRect(), paint);
                 canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
 
+
+                //Geschwindigkeit des Balles alle 20 Sekunden um 10 Prozent (Siehe Ball.makeballfaster())
+                if (playtime == 20*test){
+                    ball.makeballfaster();
+                    test++;
+                }
                 // Draw the ball
                 canvas.drawRect(ball.getRect(), paint);
 

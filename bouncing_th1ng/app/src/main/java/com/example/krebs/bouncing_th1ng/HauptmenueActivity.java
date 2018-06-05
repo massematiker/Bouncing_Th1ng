@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class HauptmenueActivity extends Activity {
+    String name;
+    EditText nameinput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,8 @@ public class HauptmenueActivity extends Activity {
         newgameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nameinput = (EditText) findViewById(R.id.nameinput);
+                name = nameinput.getText().toString();
                 startActivity(new Intent(HauptmenueActivity.this, BouncingGame.class));
             }
         });

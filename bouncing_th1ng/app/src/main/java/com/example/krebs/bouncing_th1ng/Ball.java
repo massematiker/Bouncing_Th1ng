@@ -75,4 +75,13 @@ public class Ball {
         rect.bottom = y - 20 - ballHeight;
     }
 
+    //Ballgeschwindigkeit erhöhen um 10 Prozent
+    public void makeballfaster(){
+
+            xVelocity = xVelocity * 1.1f ;
+            yVelocity = yVelocity * 1.1f ;
+
+
+    }
+
 }
