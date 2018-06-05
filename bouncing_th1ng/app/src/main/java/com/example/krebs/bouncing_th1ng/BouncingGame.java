@@ -113,6 +113,9 @@ public class BouncingGame extends Activity {
         // The score
         int score = 0;
 
+        int timer = 1;
+        int timeranzeige = 3;
+
         // Lives
         int lives = 3;
 
@@ -397,19 +400,35 @@ public class BouncingGame extends Activity {
 
                 // Has the player lost?
                 if(lives <= 0){
+                    //do nothing
+                }
+
+                if ((System.currentTimeMillis()-starttime)/1000>timer){
+                    timer++;
+                    timeranzeige--;
+
+                    //Zählt die sekunden und gibt pro sekunde +1 auf score
+                    if (timer >=4) {
+                        paused = false;
+                        playtime++;
+                        score++;
+                    }
+                }
+                //Anzeigen des Countdowns
+                if (timer<4) {
                     paint.setTextSize(90);
-                    canvas.drawText("YOU HAVE LOST!", 10,screenY/2, paint);
+                    canvas.drawText("Spiel beginnt in "+timeranzeige+" Sekunden", screenX / 4, screenY / 2, paint);
+
+                }
+                if (timer==4){
+                    paint.setTextSize(90);
+                    canvas.drawText("Go", screenX / 2, screenY / 2, paint);
                 }
 
                 // Draw everything to the screen
                 ourHolder.unlockCanvasAndPost(canvas);
             }
-            if ((System.currentTimeMillis()-starttime)/1000>playtime){
-                playtime++;
-                score++;
-                System.out.println(playtime+" Sekunden gespielt");
 
-            }
 
         }//draw
 
@@ -443,7 +462,8 @@ public class BouncingGame extends Activity {
                 // Player has touched the screen
                 case MotionEvent.ACTION_DOWN:
 
-                    paused = false;
+
+
 
 
 
