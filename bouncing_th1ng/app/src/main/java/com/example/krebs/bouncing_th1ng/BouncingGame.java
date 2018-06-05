@@ -49,7 +49,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
     int playtime = 0;
 
     
-    boolean touch = false;
+    boolean touch = true;
 
     // Create the Sensors
     private Display mDisplay;
@@ -57,7 +57,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
 
-    int test =1; //TODO
+    int difficulty =1;
 
 
     @Override
@@ -122,6 +122,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
         Bitmap background;
         Bitmap paddlepic;
+        Bitmap coinpic;
+        Bitmap boostpic;
 
         // This is our thread
         Thread gameThread = null;
@@ -157,6 +159,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
         Paddle paddle;
         // A ball
         Ball ball;
+        // A coin
+        Coin coin;
+
+        //
+        Boost[] boosts = new Boost[5];
+        int numboost = 0;
+
         // Up to 200 obstacles
         Obstacle[] obstacles = new Obstacle[200];
         int numObstacles = 0;
@@ -199,9 +208,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
             super(context);
 
             // Bitmap initialisieren
-            background = BitmapFactory.decodeResource(getResources(), R.drawable.road);
+            background = BitmapFactory.decodeResource(getResources(), R.drawable.ingame);
             paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.tastaturallefarben);
-
+            coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
 
             // Initialize ourHolder and paint objects
             ourHolder = getHolder();
@@ -220,6 +229,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
             paddle = new Paddle(screenX, screenY);
             // Create a ball
             ball = new Ball(screenX, screenY);
+
+            //create a coin
+            coin = new Coin(screenX,screenY);
 
 
             // Load the sounds
@@ -274,7 +286,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                         obstacles[numObstacles] = new Obstacle(row, column, obstacleWidth, obstacleHeight);
                         obstacles[numObstacles].setRow(row);
                         //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
-                        if(Math.random()*100 < 75)
+                        if(Math.random()*100 < 100)
                             obstacles[numObstacles].setInvisible();
                         numObstacles ++;
                     }
@@ -376,6 +388,16 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 soundPool.play(beep1ID, 1, 1, 0, 0, 1);
             }// Collission Ball and Paddle
 
+            // Check for ball colliding with coin
+            if(RectF.intersects(ball.getRect(),coin.getRect())) {
+                coin.setInvisible();
+                score +=10;
+                coin = new Coin(screenX,screenY);
+                soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+            }// Collission Ball and coin
+
+
+
             // Bounce the ball back when it hits the bottom of screen
             // And deduct a life
             if(ball.getRect().bottom > screenY){
@@ -439,6 +461,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 background = createScaledBitmap(background,screenX,screenY,false);
                 paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
+                coinpic = createScaledBitmap(coinpic, (int) coin.getLength(),(int) coin.getHeight(),false);
 
                 // Draw the background
                 canvas.drawColor(Color.WHITE);
@@ -455,13 +478,18 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
 
                 //Geschwindigkeit des Balles alle 20 Sekunden um 10 Prozent (Siehe Ball.makeballfaster())
-                if (playtime == 20*test){
+                if (playtime == 20*difficulty){
                     ball.makeballfaster();
-                    test++;
+                    difficulty++;
                 }
                 // Draw the ball
                 canvas.drawRect(ball.getRect(), paint);
 
+                // Draw the coin
+                if (coin.getVisibility()) {
+                    canvas.drawBitmap(coinpic, coin.getX(),coin.getY(), null);
+                    //canvas.drawRect(coin.getRect(), paint);
+                }
                 // Change the obstacles color for drawing
                 paint.setColor(Color.argb(255,  249, 129, 0));
 
