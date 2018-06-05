@@ -278,19 +278,73 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             // Build a wall of bricks
             numObstacles = 0;
+            int destObstacles = 0;
+            int AnzObstacles = 0;
 
             for(int column = 0; column < 8; column ++ ){
                 for(int row = 2; row < 12; row ++ ){
 
                     if(row%2 == 0){
-                        obstacles[numObstacles] = new Obstacle(row, column, obstacleWidth, obstacleHeight);
-                        obstacles[numObstacles].setRow(row);
+                        // Create Obstacles
+                        if(Math.random()*100 < 75 || destObstacles>3){
+                            obstacles[numObstacles] = new Obstacle(row, column, obstacleWidth, obstacleHeight);
+                            obstacles[numObstacles].setRow(row);
+                        }
+                        else if (destObstacles<=3){// Create Destroyable Obstacles
+                            obstacles[numObstacles] = new DestroyableObstacle(row, column, obstacleWidth, obstacleHeight);
+                            obstacles[numObstacles].setRow(row);
+                        }
                         //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
-                        if(Math.random()*100 < 100)
+                        if(Math.random()*100 < 75){
+
                             obstacles[numObstacles].setInvisible();
+
+                        }
+                        else{
+                            if(obstacles[numObstacles] instanceof DestroyableObstacle) destObstacles++;
+                            else AnzObstacles++;
+                        }
+
                         numObstacles ++;
                     }
 
+                }
+            }
+
+            // minimum 5 undestroyable obstacles
+            while(AnzObstacles<=5){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(!obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
+                    obstacles[i].setVisible();
+                    AnzObstacles++;
+                }
+
+            }
+            //max 6 undestroyable obstacles
+            while(AnzObstacles>6){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
+                    obstacles[i].setInvisible();
+                    AnzObstacles--;
+                }
+
+            }
+
+            // minimum 3 undestroyable obstacles
+            while(destObstacles<=2){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(!obstacles[i].getVisibility()  ){
+                    obstacles[i] = new DestroyableObstacle(obstacles[i].getRow(),obstacles[i].getColumn(),(int)obstacles[i].getWidth(),(int)obstacles[i].getHeight());
+                    obstacles[i].setVisible();
+                    destObstacles++;
+                }
+            }
+            // max 3 undestroyable obstacles
+            while(destObstacles>3){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(obstacles[i].getVisibility() && obstacles[i] instanceof DestroyableObstacle ){
+                    obstacles[i].setInvisible();
+                    destObstacles--;
                 }
             }
             // Reset scores and lives
@@ -334,15 +388,24 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Move the paddle if required
             paddle.update(fps);
 
-            // Check for brick colliding
+            // Check for obstacle colliding
             for(int i = 0; i < numObstacles; i++){
                 //with a ball
                 if (obstacles[i].getVisibility()){
                     obstacles[i].update(fps);
-
                     if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
                      //   obstacles[i].setInvisible();
                         ball.reverseYVelocity();
+                        if(obstacles[i] instanceof DestroyableObstacle){
+                            obstacles[i].setInvisible();
+                            for(int j = 0; j<numObstacles; j++){
+                                if ( i == j) continue;
+                                if(!obstacles[j].getVisibility() && obstacles[j] instanceof DestroyableObstacle){
+                                     obstacles[j].setVisible();
+                                     return;
+                                }
+                            }
+                        }
                         soundPool.play(explodeID, 1, 1, 0, 0, 1);
                     }
                 }
@@ -352,10 +415,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 //with each other
                 for(int j = 0; j <numObstacles; j++){
-                    if (i!=j && obstacles[i].getRect().left <= obstacles[j].getRect().right && obstacles[i].getRect().right > obstacles[j].getRect().right && obstacles[i].getRow() == obstacles[j].getRow()) {
+                    if (i!=j && obstacles[i].getRect().left <= obstacles[j].getRect().right && obstacles[i].getRect().right >= obstacles[j].getRect().right && obstacles[i].getRow() == obstacles[j].getRow()) {
                         if(obstacles[i].getVisibility() && obstacles[j].getVisibility()) {
                             obstacles[i].setObstacleMoving(2);
                             obstacles[j].setObstacleMoving(1);
+                            if(obstacles[i] instanceof DestroyableObstacle || obstacles[j] instanceof DestroyableObstacle){
+                                System.out.println("i:     "+obstacles[i].getRect());
+                                System.out.println("j:     "+obstacles[j].getRect());
+                            }
                         }
                         }
 
@@ -496,7 +563,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Draw the obstacles if visible
                 for(int i = 0; i < numObstacles; i++){
                     if(obstacles[i].getVisibility()) {
+
+                        if(obstacles[i] instanceof DestroyableObstacle){
+                            paint.setColor(Color.argb(255,  0, 100, 255));
+                        }
                         canvas.drawRect(obstacles[i].getRect(), paint);
+                        paint.setColor(Color.argb(255,  249, 129, 0));
                     }
                 }
 
