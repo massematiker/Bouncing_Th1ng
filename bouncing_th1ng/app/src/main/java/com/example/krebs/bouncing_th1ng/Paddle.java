@@ -39,7 +39,8 @@ public class Paddle {
 
         // Start paddle in roughly the sceen centre
         x = screenX / 2;
-        y = screenY - 20;
+        //hier der Wert von Height
+        y = screenY - 50 ;
         this.screenX = screenX;
 
         rect = new RectF(x, y, x + length, y + height);
