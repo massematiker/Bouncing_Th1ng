@@ -14,14 +14,20 @@ import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import java.io.FileInputStream;
@@ -30,7 +36,7 @@ import java.io.InputStream;
 
 import static android.graphics.Bitmap.createScaledBitmap;
 
-public class BouncingGame extends Activity {
+public class BouncingGame extends Activity implements SensorEventListener {
 
     // gameView will be the view of the game
     // It will also hold the logic of the game
@@ -38,6 +44,14 @@ public class BouncingGame extends Activity {
     BouncingView bouncingView;
     long starttime = 0;
     int playtime = 0;
+    
+    boolean touch = false;
+
+    // Create the Sensors
+    private Display mDisplay;
+    private WindowManager mWindowManager;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +60,48 @@ public class BouncingGame extends Activity {
 
         // Initialize gameView and set it as the view
         bouncingView = new BouncingView(this);
+
+        // Initialize the Sensors
+        mWindowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
+        mDisplay = mWindowManager.getDefaultDisplay();
+        mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         setContentView(bouncingView);
 
     }
 
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if(event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
+            return;
+
+        if(!touch) {
+            // Hier wird der Sensor abgefragt und die X-Achse entsprechend verändert. Durch vz=0 kann das Trackpas nicht nach oben oder unten
+            switch (mDisplay.getRotation()) {
+                case Surface.ROTATION_0:
+                    bouncingView.setPaddleMove(-event.values[0]);
+                    break;
+                case Surface.ROTATION_90:
+                    bouncingView.setPaddleMove(event.values[1]);
+                    break;
+                case Surface.ROTATION_180:
+                    bouncingView.setPaddleMove(event.values[0]);
+                    break;
+                case Surface.ROTATION_270:
+                    bouncingView.setPaddleMove(-event.values[1]);
+                    ;
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
 
 
     // Here is our implementation of GameView
@@ -118,6 +170,18 @@ public class BouncingGame extends Activity {
 
         // Lives
         int lives = 3;
+
+        public void setPaddleMove(float move){
+            if(move<0) {
+                move = -move;
+                paddle.setMovementState(1);
+                paddle.setPaddleSpeed(move *80);
+            }
+            else {
+                paddle.setMovementState(2);
+                paddle.setPaddleSpeed(move *80);
+            }
+        }
 
         // When the we initialize (call new()) on gameView
         // This special constructor method runs
@@ -470,33 +534,34 @@ public class BouncingGame extends Activity {
         @Override
         public boolean onTouchEvent(MotionEvent motionEvent) {
 
-            switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            if(touch){
+                switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
-                // Player has touched the screen
-                case MotionEvent.ACTION_DOWN:
+                    // Player has touched the screen
+                    case MotionEvent.ACTION_DOWN:
 
+                        if(motionEvent.getX() > screenX / 2){
+                            paddle.setMovementState(paddle.RIGHT);
+                        }
+                        else{
+                            paddle.setMovementState(paddle.LEFT);
+                        }
 
+                        break;
 
+                    // Player has removed finger from screen
+                    case MotionEvent.ACTION_UP:
 
-
-
-                    if(motionEvent.getX() > screenX / 2){
-                        paddle.setMovementState(paddle.RIGHT);
-                    }
-                    else{
-                        paddle.setMovementState(paddle.LEFT);
-                    }
-
-                    break;
-
-                // Player has removed finger from screen
-                case MotionEvent.ACTION_UP:
-
-                    paddle.setMovementState(paddle.STOPPED);
-                    break;
+                        paddle.setMovementState(paddle.STOPPED);
+                        break;
+                }
             }
             return true;
         }
+
+
+
+
 
     }
     // This is the end of our BouncingView inner class
@@ -505,6 +570,7 @@ public class BouncingGame extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_GAME);
 
         // Tell the gameView resume method to execute
         bouncingView.resume();
@@ -514,6 +580,7 @@ public class BouncingGame extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        mSensorManager.unregisterListener(this);
 
         // Tell the gameView pause method to execute
         bouncingView.pause();

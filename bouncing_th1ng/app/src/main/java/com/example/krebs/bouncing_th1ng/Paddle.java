@@ -91,4 +91,7 @@ public class Paddle {
         rect.right = x + length;
     }
 
+    public void setPaddleSpeed(float paddleSpeed) {
+        this.paddleSpeed = paddleSpeed;
+    }
 }
