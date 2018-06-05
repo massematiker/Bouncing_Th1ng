@@ -20,6 +20,7 @@ public class Obstacle {
 
     private float height;
     private int screenX;
+    private int row;
 
 
     // Which ways can the obstacles move
@@ -42,7 +43,7 @@ public class Obstacle {
     public Obstacle(int row, int column, int width, int height){
 
         isVisible = true;
-        int padding = 1;
+        int padding = 10;
 
         obstacleMoving = (int)((Math.random() * 100) % 3);
 
@@ -110,4 +111,11 @@ public class Obstacle {
 
     }
 
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getRow() {
+        return row;
+    }
 }

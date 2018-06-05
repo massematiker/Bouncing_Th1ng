@@ -188,19 +188,23 @@ public class BouncingGame extends Activity {
             ball.reset(screenX, screenY);
 
             int brickWidth = screenX / 8;
-            int brickHeight = screenY / 10;
+            int brickHeight = screenY / 20;
 
             // Build a wall of bricks
             numObstacles = 0;
 
             for(int column = 0; column < 8; column ++ ){
-                for(int row = 0; row < 3; row ++ ){
-                    obstacles[numObstacles] = new Obstacle(row, column, brickWidth, brickHeight);
+                for(int row = 2; row < 12; row ++ ){
 
-                    //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
-                    if(Math.random()*100 < 70)
-                        obstacles[numObstacles].setInvisible();
-                    numObstacles ++;
+                    if(row%2 == 0){
+                        obstacles[numObstacles] = new Obstacle(row, column, brickWidth, brickHeight);
+                        obstacles[numObstacles].setRow(row);
+                        //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
+                        if(Math.random()*100 < 75)
+                            obstacles[numObstacles].setInvisible();
+                        numObstacles ++;
+                    }
+
                 }
             }
             // Reset scores and lives
@@ -244,18 +248,33 @@ public class BouncingGame extends Activity {
             // Move the paddle if required
             paddle.update(fps);
 
-            // Check for ball colliding with a brick
+            // Check for brick colliding
             for(int i = 0; i < numObstacles; i++){
-
+                //with a ball
                 if (obstacles[i].getVisibility()){
                     obstacles[i].update(fps);
 
                     if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
-                        obstacles[i].setInvisible();
+                     //   obstacles[i].setInvisible();
                         ball.reverseYVelocity();
                         score = score + 10;
                         soundPool.play(explodeID, 1, 1, 0, 0, 1);
                     }
+                }
+                //with the wall
+                if(obstacles[i].getRect().left <0 ) obstacles[i].setObstacleMoving(2);
+                if(obstacles[i].getRect().right > screenX ) obstacles[i].setObstacleMoving(1);
+
+                //with each other
+                for(int j = 0; j <numObstacles; j++){
+                    if (i!=j && obstacles[i].getRect().left <= obstacles[j].getRect().right && obstacles[i].getRect().right > obstacles[j].getRect().right && obstacles[i].getRow() == obstacles[j].getRow()) {
+                        if(obstacles[i].getVisibility() && obstacles[j].getVisibility()) {
+                            obstacles[i].setObstacleMoving(2);
+                            obstacles[j].setObstacleMoving(1);
+                        }
+                        }
+
+
                 }
             }// for
 
@@ -323,12 +342,6 @@ public class BouncingGame extends Activity {
                 ball.setXVelocity(-200);
                 ball.clearObstacleX(screenX - 22);
                 soundPool.play(beep3ID, 1, 1, 0, 0, 1);
-            }
-
-            // If obstacle collides with left
-            for(int i=0;i< numObstacles;i++){
-                if(obstacles[i].getRect().left <0 ) obstacles[i].setObstacleMoving(2);
-                if(obstacles[i].getRect().right > screenX ) obstacles[i].setObstacleMoving(1);
             }
 
             // Pause if cleared screen
