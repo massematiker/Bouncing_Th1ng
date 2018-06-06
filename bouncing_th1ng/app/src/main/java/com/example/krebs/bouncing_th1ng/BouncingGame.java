@@ -120,6 +120,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
         Bitmap boostpic1;
         Bitmap boostpic2;
         Bitmap boostpic3;
+        Bitmap obstaclepic;
+        Bitmap destroyableobstaclepic;
 
         // This is our thread
         Thread gameThread = null;
@@ -218,6 +220,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
             boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.energy);
             boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
             boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.corny);
+            obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordner);
+            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordnergruen);
+
 
             // Initialize ourHolder and paint objects
             ourHolder = getHolder();
@@ -424,6 +429,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             for(int j = 0; j<numObstacles; j++){
                                 if ( i == j) continue;
                                 if(!obstacles[j].getVisibility() && obstacles[j] instanceof DestroyableObstacle){
+                                    boolean intersects = false;
+                                    // check if the new Obstacle intersects another one
+                                    for(int k = 0; k<numObstacles; k++){
+                                        if(k==j)continue;
+                                        if(RectF.intersects(obstacles[j].getRect(),obstacles[k].getRect())) intersects = true;
+                                    }
+                                    if (intersects) continue;
                                      obstacles[j].setVisible();
                                      return;
                                 }
@@ -555,6 +567,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Lock the canvas ready to draw
                 canvas = ourHolder.lockCanvas();
 
+
                 ballpic = createScaledBitmap(ballpic, (int) ball.ballWidth, (int) ball.ballHeight,false);
                 background = createScaledBitmap(background,screenX,screenY,false);
                 paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
@@ -566,6 +579,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 boostpic2 = createScaledBitmap(boostpic2, 75, 100, false );
                                                             // Hier die Werte aus Boost - Case 3 übernehmen
                 boostpic3 = createScaledBitmap(boostpic3, 100, 30, false );
+                obstaclepic = createScaledBitmap(obstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
+                destroyableobstaclepic = createScaledBitmap(destroyableobstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
 
 
                 // Draw the background
@@ -618,10 +633,15 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     if(obstacles[i].getVisibility()) {
 
                         if(obstacles[i] instanceof DestroyableObstacle){
-                            paint.setColor(Color.argb(255,  0, 100, 255));
+                            //paint.setColor(Color.argb(255,  0, 100, 255));
+                            canvas.drawBitmap(destroyableobstaclepic, obstacles[i].getRect().left, obstacles[i].getRect().top, null);
+                            //paint.setColor(Color.argb(255,  249, 129, 0));
+                            continue;
                         }
-                        canvas.drawRect(obstacles[i].getRect(), paint);
-                        paint.setColor(Color.argb(255,  249, 129, 0));
+                        else {
+                            canvas.drawBitmap(obstaclepic, obstacles[i].getRect().left, obstacles[i].getRect().top, null);
+                        }
+
                     }
                 }
 
