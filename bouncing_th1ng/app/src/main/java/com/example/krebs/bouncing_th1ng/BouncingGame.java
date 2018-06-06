@@ -131,6 +131,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
         Bitmap obstaclepic;
         Bitmap destroyableobstaclepic;
 
+        //booleans for the ball direction
+        boolean ballAlternateDirection = false;
+
         // This is our thread
         Thread gameThread = null;
 
@@ -471,6 +474,19 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             // Check for ball colliding with paddle
             if(RectF.intersects(paddle.getRect(),ball.getRect())) {
+
+                //ball hits the paddle left or right and is not in alternateDirection Mode
+                if((ball.getRect().centerX()<paddle.getRect().centerX()-50 || ball.getRect().centerX()>paddle.getRect().centerX()+50)&& ballAlternateDirection == false){
+                    ball.setXVelocity((int)(ball.getxVelocity()*1.2));
+                    ball.setYVelocity((int)(ball.getyVelocity()/1.2));
+                }
+                // ball hits the paddle in the middle and is in alternateDirection Mode
+                else if((ball.getRect().centerX()>paddle.getRect().centerX()-paddle.getlength()/4 || ball.getRect().centerX()<paddle.getRect().centerX()+paddle.getlength()/4)&&ballAlternateDirection){
+                    ball.setXVelocity((int)(ball.getxVelocity()/1.2));
+                    ball.setYVelocity((int)(ball.getyVelocity()*1.2));
+                }
+
+
                 //wenn sich paddle nicht bewegt
                 if (paddle.getpaddleMoving()==0){
                     ball.setRandomXVelocity();
@@ -552,7 +568,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             // If the ball hits right wall bounce
             if(ball.getRect().right > screenX - 20){
-                ball.setXVelocity(-200);
+                ball.reverseXVelocity();
                 ball.clearObstacleX(screenX - 44);
                 soundPool.play(beep3ID, 1, 1, 0, 0, 1);
             }
