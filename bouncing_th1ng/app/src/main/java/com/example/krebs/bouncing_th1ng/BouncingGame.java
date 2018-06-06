@@ -673,6 +673,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime, 10,50, paint);
 
+                if(boosted)
+                canvas.drawText("BOOSTED !", (screenX/2)-100,screenY/3, paint);
 
                 // Has the player cleared the screen?
                 if(score == numObstacles * 10){
