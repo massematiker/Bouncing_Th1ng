@@ -238,7 +238,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
             boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.corny);
             obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordner);
-            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordnergruen);
+            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordnerbraun);
 
 
             // Initialize ourHolder and paint objects
@@ -486,13 +486,15 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 //ball hits the paddle left or right and is not in alternateDirection Mode
                 if((ball.getRect().centerX()<paddle.getRect().centerX()-50 || ball.getRect().centerX()>paddle.getRect().centerX()+50)&& ballAlternateDirection == false){
-                    ball.setXVelocity((int)(ball.getxVelocity()*1.2));
-                    ball.setYVelocity((int)(ball.getyVelocity()/1.2));
+                    ball.setXVelocity((int)(ball.getxVelocity()*1.12));
+                    ball.setYVelocity((int)(ball.getyVelocity()/1.12));
+                    ballAlternateDirection = true;
                 }
                 // ball hits the paddle in the middle and is in alternateDirection Mode
                 else if((ball.getRect().centerX()>paddle.getRect().centerX()-paddle.getlength()/4 || ball.getRect().centerX()<paddle.getRect().centerX()+paddle.getlength()/4)&&ballAlternateDirection){
-                    ball.setXVelocity((int)(ball.getxVelocity()/1.2));
-                    ball.setYVelocity((int)(ball.getyVelocity()*1.2));
+                    ball.setXVelocity((int)(ball.getxVelocity()/1.12));
+                    ball.setYVelocity((int)(ball.getyVelocity()*1.12));
+                    ballAlternateDirection = false;
                 }
 
 
@@ -515,9 +517,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
 
 
-                ball.reverseYVelocity();
-                ball.clearObstacleY(paddle.getRect().top - 2);
-                soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+                if(ball.getyVelocity()>0){
+                    ball.reverseYVelocity();
+                    ball.clearObstacleY(paddle.getRect().top - 2);
+                    soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+                }
+
             }// Collission Ball and Paddle
 
             // Check for ball colliding with coins
