@@ -76,6 +76,10 @@ public class Paddle {
         return paddleMoving;
     }
 
+    public float getPaddleSpeed() {
+        return paddleSpeed;
+    }
+
     // This update method will be called from update in BreakoutView
     // It determines if the paddle needs to move and changes the coordinates
     // contained in rect if necessary

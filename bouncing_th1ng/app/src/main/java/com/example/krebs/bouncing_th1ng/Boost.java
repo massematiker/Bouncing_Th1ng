@@ -43,10 +43,10 @@ public class Boost {
                     length = 50;
                     break;
             case 2: height = 100;
-                    length = 75;
+                    length = 75; //75
                     break;
-            case 3: height = 30;
-                    length = 100;
+            case 3: height = 50;  //50
+                    length = 120;
                     break;
         }
         x = (float) (screenX/((Math.random()*100%4.8)+1.2));

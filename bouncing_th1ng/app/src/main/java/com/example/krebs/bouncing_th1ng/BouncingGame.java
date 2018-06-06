@@ -26,6 +26,8 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import java.io.IOException;
 
@@ -47,7 +49,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
     int boostedtime=10;
 
 
-    boolean boosted=false;
+    boolean boosted1=false;
+    boolean boosted2=false;
+    boolean boosted3=false;
 
     
     boolean touch = true;
@@ -416,42 +420,45 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Check for obstacle colliding
             for(int i = 0; i < numObstacles; i++){
                 //with a ball
-                if (obstacles[i].getVisibility()){
-                    obstacles[i].update(fps);
-                    //if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
-                    boolean collidesFromBottom = ball.getRect().top<= obstacles[i].getRect().bottom && ball.getRect().bottom >= obstacles[i].getRect().bottom;
-                    boolean collidesInX = ball.getRect().left <= obstacles[i].getRect().right && ball.getRect().right >=obstacles[i].getRect().left;
-                    boolean collidesFromTop = ball.getRect().bottom>= obstacles[i].getRect().top && ball.getRect().top <= obstacles[i].getRect().bottom;
-                    if( collidesInX &&(collidesFromBottom || collidesFromTop) ){
 
-                        System.out.println("Kollidiert");
+                    if (obstacles[i].getVisibility()){
+                        obstacles[i].update(fps);
+                        //if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
+                        boolean collidesFromBottom = ball.getRect().top<= obstacles[i].getRect().bottom && ball.getRect().bottom >= obstacles[i].getRect().bottom;
+                        boolean collidesInX = ball.getRect().left <= obstacles[i].getRect().right && ball.getRect().right >=obstacles[i].getRect().left;
+                        boolean collidesFromTop = ball.getRect().bottom>= obstacles[i].getRect().top && ball.getRect().top <= obstacles[i].getRect().bottom;
+                        if( collidesInX &&(collidesFromBottom || collidesFromTop) ){
+
+                            if(!boosted3) {
+                                if(collidesFromBottom && ball.getyVelocity()<0)ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
+                                if(collidesFromTop&& ball.getyVelocity()>0)ball.clearObstacleY(obstacles[i].getRect().top);
+                                ball.reverseYVelocity();}
 
 
-                        if(collidesFromBottom && ball.getyVelocity()<0)ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
-                        if(collidesFromTop&& ball.getyVelocity()>0)ball.clearObstacleY(obstacles[i].getRect().top);
-                        ball.reverseYVelocity();
-
-                        // create a new destroyable Obstacle if one is destroyed
-                        if(obstacles[i] instanceof DestroyableObstacle){
-                            obstacles[i].setInvisible();
-                            for(int j = 0; j<numObstacles; j++){
-                                if ( i == j) continue;
-                                if(!obstacles[j].getVisibility() && obstacles[j] instanceof DestroyableObstacle){
-                                    boolean intersects = false;
-                                    // check if the new Obstacle intersects another one
-                                    for(int k = 0; k<numObstacles; k++){
-                                        if(k==j)continue;
-                                        if(RectF.intersects(obstacles[j].getRect(),obstacles[k].getRect())) intersects = true;
+                                // create a new destroyable Obstacle if one is destroyed
+                                if (obstacles[i] instanceof DestroyableObstacle) {
+                                    obstacles[i].setInvisible();
+                                    for (int j = 0; j < numObstacles; j++) {
+                                        if (i == j) continue;
+                                        if (!obstacles[j].getVisibility() && obstacles[j] instanceof DestroyableObstacle) {
+                                            boolean intersects = false;
+                                            // check if the new Obstacle intersects another one
+                                            for (int k = 0; k < numObstacles; k++) {
+                                                if (k == j) continue;
+                                                if (RectF.intersects(obstacles[j].getRect(), obstacles[k].getRect()))
+                                                    intersects = true;
+                                            }
+                                            if (intersects) continue;
+                                            obstacles[j].setVisible();
+                                            return;
+                                        }
                                     }
-                                    if (intersects) continue;
-                                     obstacles[j].setVisible();
-                                     return;
                                 }
-                            }
+
+                            soundPool.play(explodeID, 1, 1, 0, 0, 1);
                         }
-                        soundPool.play(explodeID, 1, 1, 0, 0, 1);
-                    }
-                }
+                    }//with a ball
+
                 //with the wall
                 if(obstacles[i].getRect().left <0 ) obstacles[i].setObstacleMoving(2);
                 if(obstacles[i].getRect().right > screenX ) obstacles[i].setObstacleMoving(1);
@@ -473,7 +480,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
             if(RectF.intersects(paddle.getRect(),ball.getRect())) {
                 //wenn sich paddle nicht bewegt
                 if (paddle.getpaddleMoving()==0){
-                    ball.setRandomXVelocity();
+                    ball.reverseYVelocity();
+                    //ball.setRandomXVelocity();
                 }
                 //wenn sich paddle nach links bewegt
                 if (paddle.getpaddleMoving()==1){
@@ -498,7 +506,10 @@ public class BouncingGame extends Activity implements SensorEventListener {
             for(int i=0;i<numcoins;i++) {
                 if (RectF.intersects(ball.getRect(), coins[i].getRect())) {
                     coins[i].setInvisible();
-                    score += 10;
+                    // 2 facher Punktgewinn wenn boost 2
+                    if(boosted2) score += 10;
+                    // normaler Punktgewinn
+                    else score += 5;
                     coins[i] = new Coin(screenX, screenY);
                     soundPool.play(beep1ID, 1, 1, 0, 0, 1);
                 }// Collission Ball and coin
@@ -507,7 +518,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Check for ball colliding with boost
             if (RectF.intersects(ball.getRect(), boost.getRect())) {
                 boost.setInvisible();
-                boosted = true;
+                switch (boost.getTyp()){
+                    case 1: boosted1 = true;
+                            break;
+                    case 2: boosted2 = true;
+                        break;
+                    case 3: boosted3 = true;
+                        break;
+                }
                 noboost=5;
                 boost = new Boost(screenX, screenY);
                 soundPool.play(beep1ID, 1, 1, 0, 0, 1);
@@ -587,7 +605,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                                                             // Hier die Werte aus Boost - Case 2 übernehmen
                 boostpic2 = createScaledBitmap(boostpic2, 75, 100, false );
                                                             // Hier die Werte aus Boost - Case 3 übernehmen
-                boostpic3 = createScaledBitmap(boostpic3, 100, 30, false );
+                boostpic3 = createScaledBitmap(boostpic3, 120, 50, false );
                 obstaclepic = createScaledBitmap(obstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
                 destroyableobstaclepic = createScaledBitmap(destroyableobstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
 
@@ -599,8 +617,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
-
-
+                //System.out.println(paddle.getPaddleSpeed()); == 350
+                if (boosted1) paddle.setPaddleSpeed(500);
                 // Draw the paddle
                 //canvas.drawRect(paddle.getRect(), paint);
                 canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
@@ -611,10 +629,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     timeranzeige--;
                     noboost--;
                     boost.setBoosttime(boost.getBoosttime()+1);
-                    if(boosted) {
+                    if(boosted1||boosted2||boosted3) {
                         boostedtime--;
                         if (boostedtime<=0){
-                            boosted =false;
+                            if(boosted1) boosted1 =false;
+                            if(boosted2) boosted2 =false;
+                            if(boosted3) boosted3 =false;
                             boostedtime = 10;
                         }
                     }
@@ -629,7 +649,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     if (timer >=4) {
                         paused = false;
                         playtime++;
-                        score++;
+                        if (boosted2) score +=2;
+                        else score++;
                     }
                 }
 
@@ -693,8 +714,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime, 10,50, paint);
 
-                if(boosted)
-                canvas.drawText("BOOSTED !", (screenX/2)-100,screenY/3, paint);
+                if(boosted1)
+                    canvas.drawText("Schnelleres Paddle", (screenX/2)-100,screenY/3, paint);
+                if(boosted2)
+                    canvas.drawText("Mehr Punkte", (screenX/2)-100,(screenY/3)+40, paint);
+                if(boosted3)
+                    canvas.drawText("Keine Hindernisse", (screenX/2)-100,(screenY/3)+80, paint);
 
                 // Has the player cleared the screen?
                 if(score == numObstacles * 10){
