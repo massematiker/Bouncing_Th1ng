@@ -210,7 +210,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Bitmap initialisieren
             background = BitmapFactory.decodeResource(getResources(), R.drawable.ingame);
             paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.tastaturallefarben);
-            coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
+            coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.redbull);
+
 
             // Initialize ourHolder and paint objects
             ourHolder = getHolder();
@@ -393,9 +394,20 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 //with a ball
                 if (obstacles[i].getVisibility()){
                     obstacles[i].update(fps);
-                    if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
-                     //   obstacles[i].setInvisible();
+                    //if(RectF.intersects(obstacles[i].getRect(),ball.getRect())) {
+                    boolean collidesFromBottom = ball.getRect().top<= obstacles[i].getRect().bottom && ball.getRect().bottom >= obstacles[i].getRect().bottom;
+                    boolean collidesInX = ball.getRect().left <= obstacles[i].getRect().right && ball.getRect().right >=obstacles[i].getRect().left;
+                    boolean collidesFromTop = ball.getRect().bottom>= obstacles[i].getRect().top && ball.getRect().top <= obstacles[i].getRect().bottom;
+                    if( collidesInX &&(collidesFromBottom || collidesFromTop) ){
+
+                        System.out.println("Kollidiert");
+
+
+                        if(collidesFromBottom && ball.getyVelocity()<0)ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
+                        if(collidesFromTop&& ball.getyVelocity()>0)ball.clearObstacleY(obstacles[i].getRect().top);
                         ball.reverseYVelocity();
+
+                        // create a new destroyable Obstacle if one is destroyed
                         if(obstacles[i] instanceof DestroyableObstacle){
                             obstacles[i].setInvisible();
                             for(int j = 0; j<numObstacles; j++){
@@ -419,10 +431,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
                         if(obstacles[i].getVisibility() && obstacles[j].getVisibility()) {
                             obstacles[i].setObstacleMoving(2);
                             obstacles[j].setObstacleMoving(1);
-                            if(obstacles[i] instanceof DestroyableObstacle || obstacles[j] instanceof DestroyableObstacle){
-                                System.out.println("i:     "+obstacles[i].getRect());
-                                System.out.println("j:     "+obstacles[j].getRect());
-                            }
                         }
                         }
 
@@ -489,21 +497,21 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Bounce the ball back when it hits the top of screen
             if(ball.getRect().top < 0){
                 ball.reverseYVelocity();
-                ball.clearObstacleY(12);
+                ball.clearObstacleY(24);
                 soundPool.play(beep2ID, 1, 1, 0, 0, 1);
             }// Bounce from Top
 
             // If the ball hits left wall bounce
             if(ball.getRect().left < 0){
                 ball.reverseXVelocity();
-                ball.clearObstacleX(2);
+                ball.clearObstacleX(4);
                 soundPool.play(beep3ID, 1, 1, 0, 0, 1);
             }
 
             // If the ball hits right wall bounce
-            if(ball.getRect().right > screenX - 10){
+            if(ball.getRect().right > screenX - 20){
                 ball.setXVelocity(-200);
-                ball.clearObstacleX(screenX - 22);
+                ball.clearObstacleX(screenX - 44);
                 soundPool.play(beep3ID, 1, 1, 0, 0, 1);
             }
 

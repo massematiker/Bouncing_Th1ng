@@ -8,8 +8,8 @@ public class Ball {
     RectF rect;
     float xVelocity;
     float yVelocity;
-    float ballWidth = 10;
-    float ballHeight = 10;
+    float ballWidth = 20;
+    float ballHeight = 20;
 
     public Ball(int screenX, int screenY){
 
@@ -84,4 +84,15 @@ public class Ball {
 
     }
 
+    public float getxVelocity() {
+        return xVelocity;
+    }
+
+    public float getyVelocity() {
+        return yVelocity;
+    }
+
+    public float getBallHeight() {
+        return ballHeight;
+    }
 }
