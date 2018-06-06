@@ -78,8 +78,8 @@ public class Ball {
     //Ballgeschwindigkeit erhöhen um 10 Prozent
     public void makeballfaster(){
 
-            xVelocity = xVelocity * 1.1f ;
-            yVelocity = yVelocity * 1.1f ;
+            xVelocity = xVelocity * 1.05f ;
+            yVelocity = yVelocity * 1.05f ;
 
 
     }

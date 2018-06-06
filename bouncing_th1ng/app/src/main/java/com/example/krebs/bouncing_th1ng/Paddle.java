@@ -34,19 +34,20 @@ public class Paddle {
     // in the screen width and height
     public Paddle(int screenX, int screenY){
         // 130 pixels wide and 20 pixels high
-        length = 200;
-        height = 50;
+        length = 250;
+        //muss unten noch angepasst werden bei y
+        height = 60;
 
         // Start paddle in roughly the sceen centre
         x = screenX / 2;
         //hier der Wert von Height
-        y = screenY - 50 ;
+        y = screenY - 60 ;
         this.screenX = screenX;
 
         rect = new RectF(x, y, x + length, y + height);
 
         // How fast is the paddle in pixels per second
-        paddleSpeed = 350;
+        paddleSpeed = 450;
     }
 
     // This is a getter method to make the rectangle that

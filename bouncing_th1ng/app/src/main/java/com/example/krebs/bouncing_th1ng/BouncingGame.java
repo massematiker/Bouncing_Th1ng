@@ -47,6 +47,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
     int boostsichtbar = 20;
     // Wie lange ist man geboostet //auch in sekunden zähler ändern
     int boostedtime=10;
+    // Boostscore
+    int boostscore=0;
 
 
     boolean boosted1=false;
@@ -534,6 +536,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Check for ball colliding with boost
             if (RectF.intersects(ball.getRect(), boost.getRect())) {
                 boost.setInvisible();
+                boostscore++;
                 switch (boost.getTyp()){
                     case 1: boosted1 = true;
                             break;
@@ -617,11 +620,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
 
                                                             // Hier die Werte aus Boost - Case 1 übernehmen
-                boostpic1 = createScaledBitmap(boostpic1, 50, 100, false );
+                boostpic1 = createScaledBitmap(boostpic1, 75, 150, false );
                                                             // Hier die Werte aus Boost - Case 2 übernehmen
-                boostpic2 = createScaledBitmap(boostpic2, 75, 100, false );
+                boostpic2 = createScaledBitmap(boostpic2, 90, 140, false );
                                                             // Hier die Werte aus Boost - Case 3 übernehmen
-                boostpic3 = createScaledBitmap(boostpic3, 120, 50, false );
+                boostpic3 = createScaledBitmap(boostpic3, 200, 60, false );
                 obstaclepic = createScaledBitmap(obstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
                 destroyableobstaclepic = createScaledBitmap(destroyableobstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
 
@@ -634,7 +637,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
                 //System.out.println(paddle.getPaddleSpeed()); == 350
-                if (boosted1) paddle.setPaddleSpeed(500);
+                if (boosted1){ paddle.setPaddleSpeed(800);}
+                else paddle.setPaddleSpeed(450);
                 // Draw the paddle
                 //canvas.drawRect(paddle.getRect(), paint);
                 canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
@@ -728,14 +732,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Draw the score, Lives, and Time played
                 paint.setTextSize(40);
 
-                canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime, 10,50, paint);
+                canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime + " Boosts: "+boostscore, 10,50, paint);
 
                 if(boosted1)
-                    canvas.drawText("Schnelleres Paddle", (screenX/2)-100,screenY/3, paint);
+                    canvas.drawText("Schnelleres Paddle", (screenX/2)-140,screenY/3, paint);
                 if(boosted2)
-                    canvas.drawText("Mehr Punkte", (screenX/2)-100,(screenY/3)+40, paint);
+                    canvas.drawText("Mehr Punkte", (screenX/2)-140,(screenY/3)+40, paint);
                 if(boosted3)
-                    canvas.drawText("Keine Hindernisse", (screenX/2)-100,(screenY/3)+80, paint);
+                    canvas.drawText("Keine Hindernisse", (screenX/2)-140,(screenY/3)+80, paint);
 
                 // Has the player cleared the screen?
                 if(score == numObstacles * 10){
