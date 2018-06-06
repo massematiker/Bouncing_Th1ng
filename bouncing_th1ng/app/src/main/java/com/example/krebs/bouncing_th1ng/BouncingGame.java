@@ -39,7 +39,15 @@ public class BouncingGame extends Activity implements SensorEventListener {
     BouncingView bouncingView;
     long starttime = 0;
     int playtime = 0;
-    int noboost = 0;
+    // Counter für Sekunden bis ein boost angezeigt wird muss auch in colliding boost geändert werden
+    int noboost = 5;
+    // Wie lange (ungefähr) ist ein boost sichtbar ?
+    int boostsichtbar = 20;
+    // Wie lange ist man geboostet //auch in sekunden zähler ändern
+    int boostedtime=10;
+
+
+    boolean boosted=false;
 
     
     boolean touch = true;
@@ -487,7 +495,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Check for ball colliding with boost
             if (RectF.intersects(ball.getRect(), boost.getRect())) {
                 boost.setInvisible();
-
+                boosted = true;
+                noboost=5;
                 boost = new Boost(screenX, screenY);
                 soundPool.play(beep1ID, 1, 1, 0, 0, 1);
             }// Collission Ball and boost
@@ -581,6 +590,33 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 //canvas.drawRect(paddle.getRect(), paint);
                 canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
 
+                //Counter für noboost // zählt jede sekunde
+                if ((System.currentTimeMillis()-starttime)/1000>timer){
+                    timer++;
+                    timeranzeige--;
+                    noboost--;
+                    boost.setBoosttime(boost.getBoosttime()+1);
+                    if(boosted) {
+                        boostedtime--;
+                        if (boostedtime<=0){
+                            boosted =false;
+                            boostedtime = 10;
+                        }
+                    }
+                    // Was nach xx(boostsichtbar) Sekunden passiert
+                    if (boost.getBoosttime()>boostsichtbar){
+                        boost.setInvisible();
+                        noboost=5;
+                        boost = new Boost(screenX, screenY);
+                    }
+
+                    //Zählt die sekunden und gibt pro sekunde +1 auf score
+                    if (timer >=4) {
+                        paused = false;
+                        playtime++;
+                        score++;
+                    }
+                }
 
                 //Geschwindigkeit des Balles alle 20 Sekunden um 10 Prozent (Siehe Ball.makeballfaster())
                 if (playtime == 20*difficulty){
@@ -597,6 +633,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                         //canvas.drawRect(coin.getRect(), paint);
                     }
                 }
+
+                // Draw the Boost
+                if (noboost<=0) boost.setVisible();
                 if (boost.getVisibility()) {
                     switch (boost.typ){
                         case 1: canvas.drawBitmap(boostpic1, boost.getX(), boost.getY(), null);
@@ -646,17 +685,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     //do nothing
                 }
 
-                if ((System.currentTimeMillis()-starttime)/1000>timer){
-                    timer++;
-                    timeranzeige--;
 
-                    //Zählt die sekunden und gibt pro sekunde +1 auf score
-                    if (timer >=4) {
-                        paused = false;
-                        playtime++;
-                        score++;
-                    }
-                }
                 //Anzeigen des Countdowns
                 if (timer<4) {
                     paint.setTextSize(90);
@@ -667,6 +696,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     paint.setTextSize(90);
                     canvas.drawText("Go", screenX / 2, screenY / 2, paint);
                 }
+
+
 
                 // Draw everything to the screen
                 ourHolder.unlockCanvasAndPost(canvas);

@@ -15,7 +15,7 @@ public class Boost {
     private float x;
     private int screenX;
     private float y;
-    int boosttime = 0;
+    int boosttime ;
 
     private boolean isVisible;
     public RectF getRect(){
@@ -23,6 +23,9 @@ public class Boost {
     }
     public void setInvisible(){
         isVisible = false;
+    }
+    public void setVisible(){
+        isVisible = true;
     }
     public boolean getVisibility(){
         return isVisible;
@@ -48,8 +51,8 @@ public class Boost {
         }
         x = (float) (screenX/((Math.random()*100%4.8)+1.2));
         y = (float) (screenY/((Math.random()*100%2.6)+1.4));
-
-        isVisible=true;
+        boosttime=0;
+        isVisible=false;
 
         rect = new RectF(x, y, x + length, y + height);
 
