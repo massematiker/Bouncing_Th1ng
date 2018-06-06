@@ -60,7 +60,7 @@ public class Coin {
     public Coin(int screenX, int screenY){
         // 130 pixels wide and 20 pixels high
         length = 100;
-        height = 150;
+        height = 100;
 
         x = (float) (screenX/((Math.random()*100%4.8)+1.2));
         y = (float) (screenY/((Math.random()*100%2.6)+1.4));

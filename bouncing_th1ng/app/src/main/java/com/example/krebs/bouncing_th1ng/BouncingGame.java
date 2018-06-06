@@ -10,9 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -29,13 +27,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-import android.widget.EditText;
-
-import android.widget.RelativeLayout;
-
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import static android.graphics.Bitmap.createScaledBitmap;
 
@@ -47,6 +39,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
     BouncingView bouncingView;
     long starttime = 0;
     int playtime = 0;
+    int noboost = 0;
 
     
     boolean touch = true;
@@ -120,10 +113,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
     // A thread and can override the run method.
     class BouncingView extends SurfaceView implements Runnable {
 
+        Bitmap ballpic;
         Bitmap background;
         Bitmap paddlepic;
         Bitmap coinpic;
-        Bitmap boostpic;
+        Bitmap boostpic1;
+        Bitmap boostpic2;
+        Bitmap boostpic3;
 
         // This is our thread
         Thread gameThread = null;
@@ -157,14 +153,20 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
         // The player's paddle
         Paddle paddle;
+
         // A ball
         Ball ball;
-        // A coin
-        Coin coin;
 
-        //
-        Boost[] boosts = new Boost[5];
-        int numboost = 0;
+        // Coins erzeugen
+        // Anzahl coins
+        int numcoins = 3;
+        Coin[] coins = new Coin[numcoins];
+
+
+        // Boost erzeugen
+        // Anzahl boost
+        Boost boost ;
+
 
         // Up to 200 obstacles
         Obstacle[] obstacles = new Obstacle[200];
@@ -208,9 +210,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
             super(context);
 
             // Bitmap initialisieren
-            background = BitmapFactory.decodeResource(getResources(), R.drawable.ingame);
+            ballpic = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
+            background = BitmapFactory.decodeResource(getResources(), R.drawable.gameboy);
             paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.tastaturallefarben);
-            coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
+            coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
+            boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.energy);
+            boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
+            boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.corny);
 
             // Initialize ourHolder and paint objects
             ourHolder = getHolder();
@@ -231,7 +237,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
             ball = new Ball(screenX, screenY);
 
             //create a coin
-            coin = new Coin(screenX,screenY);
+            coins[0] = new Coin(screenX,screenY);
+            coins[1] = new Coin(screenX,screenY);
+            coins[2] = new Coin(screenX,screenY);
+
+            //create boost
+            boost = new Boost(screenX,screenY);
 
 
             // Load the sounds
@@ -455,13 +466,23 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 soundPool.play(beep1ID, 1, 1, 0, 0, 1);
             }// Collission Ball and Paddle
 
-            // Check for ball colliding with coin
-            if(RectF.intersects(ball.getRect(),coin.getRect())) {
-                coin.setInvisible();
-                score +=10;
-                coin = new Coin(screenX,screenY);
+            // Check for ball colliding with coins
+            for(int i=0;i<numcoins;i++) {
+                if (RectF.intersects(ball.getRect(), coins[i].getRect())) {
+                    coins[i].setInvisible();
+                    score += 10;
+                    coins[i] = new Coin(screenX, screenY);
+                    soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+                }// Collission Ball and coin
+            }
+
+            // Check for ball colliding with boost
+            if (RectF.intersects(ball.getRect(), boost.getRect())) {
+                boost.setInvisible();
+
+                boost = new Boost(screenX, screenY);
                 soundPool.play(beep1ID, 1, 1, 0, 0, 1);
-            }// Collission Ball and coin
+            }// Collission Ball and boost
 
 
 
@@ -526,9 +547,18 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Lock the canvas ready to draw
                 canvas = ourHolder.lockCanvas();
 
+                ballpic = createScaledBitmap(ballpic, (int) ball.ballWidth, (int) ball.ballHeight,false);
                 background = createScaledBitmap(background,screenX,screenY,false);
                 paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
-                coinpic = createScaledBitmap(coinpic, (int) coin.getLength(),(int) coin.getHeight(),false);
+                coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
+
+                                                            // Hier die Werte aus Boost - Case 1 übernehmen
+                boostpic1 = createScaledBitmap(boostpic1, 50, 100, false );
+                                                            // Hier die Werte aus Boost - Case 2 übernehmen
+                boostpic2 = createScaledBitmap(boostpic2, 75, 100, false );
+                                                            // Hier die Werte aus Boost - Case 3 übernehmen
+                boostpic3 = createScaledBitmap(boostpic3, 100, 30, false );
+
 
                 // Draw the background
                 canvas.drawColor(Color.WHITE);
@@ -550,13 +580,28 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     difficulty++;
                 }
                 // Draw the ball
-                canvas.drawRect(ball.getRect(), paint);
+                canvas.drawBitmap(ballpic, ball.rect.left,ball.rect.bottom,null);
 
                 // Draw the coin
-                if (coin.getVisibility()) {
-                    canvas.drawBitmap(coinpic, coin.getX(),coin.getY(), null);
-                    //canvas.drawRect(coin.getRect(), paint);
+                for (int i=0; i<numcoins; i++) {
+                    if (coins[i].getVisibility()) {
+                        canvas.drawBitmap(coinpic, coins[i].getX(), coins[i].getY(), null);
+                        //canvas.drawRect(coin.getRect(), paint);
+                    }
                 }
+                if (boost.getVisibility()) {
+                    switch (boost.typ){
+                        case 1: canvas.drawBitmap(boostpic1, boost.getX(), boost.getY(), null);
+                                break;
+                                case 2: canvas.drawBitmap(boostpic2, boost.getX(), boost.getY(), null);
+                                        break;
+                                    case 3: canvas.drawBitmap(boostpic3, boost.getX(), boost.getY(), null);
+                                            break;
+                        }
+                }
+
+
+
                 // Change the obstacles color for drawing
                 paint.setColor(Color.argb(255,  249, 129, 0));
 
