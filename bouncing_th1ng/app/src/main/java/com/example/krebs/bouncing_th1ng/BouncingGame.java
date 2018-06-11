@@ -237,8 +237,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
             boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.energy);
             boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
             boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.corny);
-            obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordner);
-            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordnerbraun);
+            obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordnerbraun);
+            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordner);
 
 
             // Initialize ourHolder and paint objects
@@ -737,14 +737,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Draw the score, Lives, and Time played
                 paint.setTextSize(40);
 
-                canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime + " Boosts: "+boostscore, 10,50, paint);
+                canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime + "  Gesammelte Boosts: "+boostscore, 10,50, paint);
 
                 if(boosted1)
-                    canvas.drawText("Schnelleres Paddle", (screenX/2)-140,screenY/3, paint);
+                    canvas.drawText("Schnelleres Paddle !!", (screenX/2)-140,screenY/3, paint);
                 if(boosted2)
-                    canvas.drawText("Mehr Punkte", (screenX/2)-140,(screenY/3)+40, paint);
+                    canvas.drawText("Doppelte Punkte !!", (screenX/2)-140,(screenY/3)+40, paint);
                 if(boosted3)
-                    canvas.drawText("Keine Hindernisse", (screenX/2)-140,(screenY/3)+80, paint);
+                    canvas.drawText("Keine Hindernisse !!", (screenX/2)-140,(screenY/3)+80, paint);
 
                 // Has the player cleared the screen?
                 if(score == numObstacles * 10){
