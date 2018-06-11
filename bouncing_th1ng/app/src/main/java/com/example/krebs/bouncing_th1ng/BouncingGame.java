@@ -100,6 +100,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
         //Initilization for the HighScore
         gamePrefs = getSharedPreferences(GAME_PREFS, 0);
+        touch = gamePrefs.getBoolean("touch",false);
 
         setContentView(bouncingView);
 

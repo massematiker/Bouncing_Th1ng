@@ -44,7 +44,7 @@ public class HauptmenueActivity extends Activity {
                 checkBoxTouch = (CheckBox) findViewById(R.id.cbTouch);
                 playTouch = checkBoxTouch.isChecked();
                 checkBoxHelp = (CheckBox) findViewById(R.id.cbHilfeScreen);
-                helpMenu = checkBoxTouch.isChecked();
+                helpMenu = checkBoxHelp.isChecked();
 
 
                 nameinput = (EditText) findViewById(R.id.nameinput);
@@ -56,7 +56,9 @@ public class HauptmenueActivity extends Activity {
                 SharedPreferences.Editor nameEdit = gamePrefs.edit();
 
                 nameEdit.putString("name",name);
+                nameEdit.putBoolean("touch",playTouch);
                 nameEdit.commit();
+
 
                 if (helpMenu) startActivity(new Intent(HauptmenueActivity.this, HelpActivity.class));
                 else startActivity(new Intent(HauptmenueActivity.this, BouncingGame.class));
