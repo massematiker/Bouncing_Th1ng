@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 public class HauptmenueActivity extends Activity {
     String name;
@@ -17,11 +18,12 @@ public class HauptmenueActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hauptmenue);
         configurenewgamebuttonhaupt();
+        configurehighscorebutton();
 
 
     }
     private void configurenewgamebuttonhaupt(){
-        Button newgameButton = (Button) findViewById(R.id.newgamebuttonhaupt);
+        ImageButton newgameButton = (ImageButton) findViewById(R.id.newgamebuttonhaupt);
         newgameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,4 +33,15 @@ public class HauptmenueActivity extends Activity {
             }
         });
     }
+
+    private void  configurehighscorebutton(){
+        ImageButton highscorebutton = (ImageButton ) findViewById(R.id.highscorebutton);
+        highscorebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HauptmenueActivity.this, HighscoreActivity.class));
+            }
+        });
+    }
+
 }

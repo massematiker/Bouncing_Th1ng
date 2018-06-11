@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class GameOverActivity extends Activity {
 
@@ -15,10 +16,11 @@ public class GameOverActivity extends Activity {
         setContentView(R.layout.activity_game_over);
         configurenewgamebutton();
         configuremenubutton();
+        configurehighscorebutton1();
     }
 
     private void configurenewgamebutton(){
-        Button newgameButton = (Button) findViewById(R.id.newgamebutton);
+        ImageButton newgameButton = (ImageButton) findViewById(R.id.newgamebutton);
         newgameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,7 +29,7 @@ public class GameOverActivity extends Activity {
         });
     }
     private void configuremenubutton(){
-        Button menuButton = (Button) findViewById(R.id.menubutton);
+        ImageButton menuButton = (ImageButton) findViewById(R.id.menubutton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,4 +37,14 @@ public class GameOverActivity extends Activity {
             }
         });
     }
+    private void  configurehighscorebutton1(){
+        ImageButton highscorebutton1 = (ImageButton) findViewById(R.id.highscorebutton1);
+        highscorebutton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GameOverActivity.this, HighscoreActivity.class));
+            }
+        });
+    }
+
 }

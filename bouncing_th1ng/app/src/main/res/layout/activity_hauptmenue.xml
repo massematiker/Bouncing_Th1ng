@@ -7,71 +7,61 @@
     android:background="@drawable/hauptmenue3"
     tools:context=".HauptmenueActivity">
 
-    <Button
-        android:id="@+id/newgamebuttonhaupt"
-        android:layout_width="153dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#e2e2e2"
-        android:text=" Start New Game"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.397"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.341" />
-
     <EditText
         android:id="@+id/nameinput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="154dp"
+        android:layout_marginBottom="112dp"
         android:layout_marginEnd="232dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name eingeben"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.985"
+        app:layout_constraintHorizontal_bias="0.905"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newgamebuttonhaupt"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/newgamebuttonhaupt" />
 
     <TextView
         android:id="@+id/gamename"
         android:layout_width="351dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="252dp"
+        android:layout_marginBottom="22dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="47dp"
         android:text="The Bouncing-Th1ng"
         android:textColor="@android:color/black"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/newgamebuttonhaupt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.342"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         tools:text="The Bouncing-Th1ng" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
+
+    <ImageButton
+        android:id="@+id/newgamebuttonhaupt"
+        android:layout_width="89dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="7dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginStart="16dp"
-        android:text="TextView"
+
+        android:layout_marginBottom="186dp"
+        android:background="@drawable/play"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nameinput"
+        app:layout_constraintStart_toStartOf="@+id/nameinput"
         app:layout_constraintTop_toBottomOf="@+id/gamename" />
+
+    <ImageButton
+        android:id="@+id/highscorebutton"
+        android:layout_width="137dp"
+        android:layout_height="106dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/trophy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
