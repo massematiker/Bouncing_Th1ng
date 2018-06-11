@@ -55,7 +55,9 @@ public class HauptmenueActivity extends Activity {
                 SharedPreferences.Editor nameEdit = gamePrefs.edit();
 
                 nameEdit.putString("name",name);
+                nameEdit.putBoolean("touch",playTouch);
                 nameEdit.commit();
+
 
                 if (helpMenu) startActivity(new Intent(HauptmenueActivity.this, HelpActivity.class));
                 else startActivity(new Intent(HauptmenueActivity.this, BouncingGame.class));

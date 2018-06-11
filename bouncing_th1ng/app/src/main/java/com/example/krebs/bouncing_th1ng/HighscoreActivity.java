@@ -38,40 +38,40 @@ public class HighscoreActivity extends Activity {
             HighScore5.setText("5   : 0");
         }
         else if(!gamePrefs.contains("2")){
-            HighScore1.setText("1  "+gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
-            HighScore2.setText("2   : 0");
-            HighScore3.setText("3   : 0");
-            HighScore4.setText("4   : 0");
-            HighScore5.setText("5   : 0");
+            HighScore1.setText(gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
+            HighScore2.setText("   : 0");
+            HighScore3.setText("   : 0");
+            HighScore4.setText("   : 0");
+            HighScore5.setText("   : 0");
         }
         else if(!gamePrefs.contains("3")){
-            HighScore1.setText("1  "+gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
-            HighScore2.setText("2  "+gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
-            HighScore3.setText("3   : 0");
-            HighScore4.setText("4   : 0");
-            HighScore5.setText("5   : 0");
+            HighScore1.setText(gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
+            HighScore2.setText(gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
+            HighScore3.setText("   : 0");
+            HighScore4.setText("   : 0");
+            HighScore5.setText("   : 0");
         }
         else if(!gamePrefs.contains("4")){
-            HighScore1.setText("1  "+gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
-            HighScore2.setText("2  "+gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
-            HighScore3.setText("3  "+gamePrefs.getString("name3","name")+" : "+ gamePrefs.getInt("3",0));
-            HighScore4.setText("4   : 0");
-            HighScore5.setText("5   : 0");
+            HighScore1.setText(gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
+            HighScore2.setText(gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
+            HighScore3.setText(gamePrefs.getString("name3","name")+" : "+ gamePrefs.getInt("3",0));
+            HighScore4.setText("   : 0");
+            HighScore5.setText("   : 0");
         }
         else if(!gamePrefs.contains("5")){
-            HighScore1.setText("1  "+gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
-            HighScore2.setText("2  "+gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
-            HighScore3.setText("3  "+gamePrefs.getString("name3","name")+" : "+ gamePrefs.getInt("3",0));
-            HighScore4.setText("4  "+gamePrefs.getString("name4","name")+" : "+ gamePrefs.getInt("4",0));
-            HighScore5.setText("5   : 0");
+            HighScore1.setText(gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
+            HighScore2.setText(gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
+            HighScore3.setText(gamePrefs.getString("name3","name")+" : "+ gamePrefs.getInt("3",0));
+            HighScore4.setText(gamePrefs.getString("name4","name")+" : "+ gamePrefs.getInt("4",0));
+            HighScore5.setText("   : 0");
 
         }
         else{
-            HighScore1.setText("1  "+gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
-            HighScore2.setText("2  "+gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
-            HighScore3.setText("3  "+gamePrefs.getString("name3","name")+" : "+ gamePrefs.getInt("3",0));
-            HighScore4.setText("4  "+gamePrefs.getString("name4","name")+" : "+ gamePrefs.getInt("4",0));
-            HighScore5.setText("5  "+gamePrefs.getString("name5","name")+" : "+ gamePrefs.getInt("5",0));
+            HighScore1.setText(gamePrefs.getString("name1","name")+" : "+ gamePrefs.getInt("1",0));
+            HighScore2.setText(gamePrefs.getString("name2","name")+" : "+ gamePrefs.getInt("2",0));
+            HighScore3.setText(gamePrefs.getString("name3","name")+" : "+ gamePrefs.getInt("3",0));
+            HighScore4.setText(gamePrefs.getString("name4","name")+" : "+ gamePrefs.getInt("4",0));
+            HighScore5.setText(gamePrefs.getString("name5","name")+" : "+ gamePrefs.getInt("5",0));
         }
 
 
