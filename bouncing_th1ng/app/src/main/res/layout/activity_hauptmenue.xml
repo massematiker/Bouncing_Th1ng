@@ -9,32 +9,28 @@
 
     <EditText
         android:id="@+id/nameinput"
-        android:layout_width="wrap_content"
+        android:layout_width="193dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
-        android:layout_marginEnd="232dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="92dp"
+        android:layout_marginStart="140dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name eingeben"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.905"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newgamebuttonhaupt" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/gamename"
         android:layout_width="351dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="249dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="47dp"
         android:text="The Bouncing-Th1ng"
         android:textColor="@android:color/black"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/newgamebuttonhaupt"
+        app:layout_constraintBottom_toTopOf="@+id/cbTouch"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.342"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +40,7 @@
 
     <ImageButton
         android:id="@+id/newgamebuttonhaupt"
-        android:layout_width="89dp"
+        android:layout_width="71dp"
         android:layout_height="0dp"
 
         android:layout_marginBottom="186dp"
@@ -63,5 +59,29 @@
         android:background="@drawable/trophy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/cbHilfeScreen"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginStart="69dp"
+        android:text="Hilfe anzeigen"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbTouch"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/cbTouch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="186dp"
+        android:text="Enable Touch"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cbHilfeScreen"
+        app:layout_constraintTop_toBottomOf="@+id/gamename" />
 
 </android.support.constraint.ConstraintLayout>

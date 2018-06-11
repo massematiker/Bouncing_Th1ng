@@ -46,7 +46,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
     // Wie lange (ungefähr) ist ein boost sichtbar ?
     int boostsichtbar = 20;
     // Wie lange ist man geboostet //auch in sekunden zähler ändern
-    int boostedtime=10;
+    int boostedtime1=10;
+    int boostedtime2=10;
+    int boostedtime3=10;
     // Boostscore
     int boostscore=0;
 
@@ -183,7 +185,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
 
         // Boost erzeugen
-        // Anzahl boost
         Boost boost ;
 
 
@@ -345,6 +346,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
             }
 
+
+
             // minimum 5 undestroyable obstacles
             while(AnzObstacles<=5){
                 int i =(int)((Math.random()*100)%numObstacles);
@@ -385,6 +388,82 @@ public class BouncingGame extends Activity implements SensorEventListener {
             score = 0;
             lives = 3;
         }//createObstaclesAndRestart
+
+        public void createnewObstacles(){
+
+
+            int obstacleWidth = screenX / 8;
+            int obstacleHeight = screenY / 20;
+
+            // Build a wall of bricks
+            numObstacles = 0;
+            int destObstacles = 0;
+            int AnzObstacles = 0;
+
+            for(int column = 0; column < 8; column ++ ){
+                for(int row = 2; row < 12; row ++ ){
+
+                    if(row%2 == 0){
+                        // Create Obstacles
+                        if(Math.random()*100 < 75 || destObstacles>3){
+                            obstacles[numObstacles] = new Obstacle(row, column, obstacleWidth, obstacleHeight);
+                            obstacles[numObstacles].setRow(row);
+                        }
+                        else if (destObstacles<=3){// Create Destroyable Obstacles
+                            obstacles[numObstacles] = new DestroyableObstacle(row, column, obstacleWidth, obstacleHeight);
+                            obstacles[numObstacles].setRow(row);
+                        }
+                        //wenn aus 50 eine höhere zahl gemacht wird werden es weniger obstacles Felix trautmann
+                        if(Math.random()*100 < 75){
+
+                            obstacles[numObstacles].setInvisible();
+
+                        }
+                        else{
+                            if(obstacles[numObstacles] instanceof DestroyableObstacle) destObstacles++;
+                            else AnzObstacles++;
+                        }
+
+                        numObstacles ++;
+                    }
+
+                }
+            }
+            // minimum 5 undestroyable obstacles
+            while(AnzObstacles<=5){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(!obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
+                    obstacles[i].setVisible();
+                    AnzObstacles++;
+                }
+            }
+            //max 6 undestroyable obstacles
+            while(AnzObstacles>6){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
+                    obstacles[i].setInvisible();
+                    AnzObstacles--;
+                }
+            }
+
+            // minimum 3 undestroyable obstacles
+            while(destObstacles<=2){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(!obstacles[i].getVisibility()  ){
+                    obstacles[i] = new DestroyableObstacle(obstacles[i].getRow(),obstacles[i].getColumn(),(int)obstacles[i].getWidth(),(int)obstacles[i].getHeight());
+                    obstacles[i].setVisible();
+                    destObstacles++;
+                }
+            }
+            // max 3 undestroyable obstacles
+            while(destObstacles>3){
+                int i =(int)((Math.random()*100)%numObstacles);
+                if(obstacles[i].getVisibility() && obstacles[i] instanceof DestroyableObstacle ){
+                    obstacles[i].setInvisible();
+                    destObstacles--;
+                }
+            }
+        }//createnewObstacles
 
 
         @Override
@@ -539,7 +618,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             }
 
             // Check for ball colliding with boost
-            if (RectF.intersects(ball.getRect(), boost.getRect())) {
+            if (RectF.intersects(ball.getRect(), boost.getRect())&&boost.getVisibility()==true) {
                 boost.setInvisible();
                 boostscore++;
                 switch (boost.getTyp()){
@@ -564,6 +643,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 ball.clearObstacleY(screenY - 2);
 
                 // Lose a life
+                createnewObstacles();
                 lives --;
                 soundPool.play(loseLifeID, 1, 1, 0, 0, 1);
                 ball.makeballfaster();
@@ -639,6 +719,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 canvas.drawBitmap(background, (0), (0), null);
 
 
+
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
                 //System.out.println(paddle.getPaddleSpeed()); == 350
@@ -655,13 +736,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     noboost--;
                     boost.setBoosttime(boost.getBoosttime()+1);
                     if(boosted1||boosted2||boosted3) {
-                        boostedtime--;
-                        if (boostedtime<=0){
-                            if(boosted1) boosted1 =false;
-                            if(boosted2) boosted2 =false;
-                            if(boosted3) boosted3 =false;
-                            boostedtime = 10;
-                        }
+                        if (boosted1) boostedtime1--;
+                        if (boosted2) boostedtime2--;
+                        if (boosted3) boostedtime3--;
+                        if (boostedtime1<=0)if(boosted1){ boosted1 =false; boostedtime1 = 10;};
+                        if (boostedtime2<=0)if(boosted2){ boosted2 =false; boostedtime2 = 10;}
+                        if (boostedtime3<=0)if(boosted3){ boosted3 =false; boostedtime3 = 10;}
                     }
                     // Was nach xx(boostsichtbar) Sekunden passiert
                     if (boost.getBoosttime()>boostsichtbar){
@@ -694,6 +774,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                         //canvas.drawRect(coin.getRect(), paint);
                     }
                 }
+
 
                 // Draw the Boost
                 if (noboost<=0) boost.setVisible();

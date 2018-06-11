@@ -6,16 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class HauptmenueActivity extends Activity {
     String name;
     EditText nameinput;
+    boolean playTouch;
+    boolean helpMenu;
+    CheckBox checkBoxTouch;
+    CheckBox checkBoxHelp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_hauptmenue);
         configurenewgamebuttonhaupt();
         configurehighscorebutton();
@@ -23,13 +29,23 @@ public class HauptmenueActivity extends Activity {
 
     }
     private void configurenewgamebuttonhaupt(){
+
         ImageButton newgameButton = (ImageButton) findViewById(R.id.newgamebuttonhaupt);
         newgameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Schreibt Inhalt der Checkboxen in Boolean
+                checkBoxTouch = (CheckBox) findViewById(R.id.cbTouch);
+                playTouch = checkBoxTouch.isChecked();
+                checkBoxHelp = (CheckBox) findViewById(R.id.cbHilfeScreen);
+                helpMenu = checkBoxTouch.isChecked();
+
+
                 nameinput = (EditText) findViewById(R.id.nameinput);
                 name = nameinput.getText().toString();
-                startActivity(new Intent(HauptmenueActivity.this, BouncingGame.class));
+                if (helpMenu) startActivity(new Intent(HauptmenueActivity.this, HelpActivity.class));
+                else startActivity(new Intent(HauptmenueActivity.this, BouncingGame.class));
             }
         });
     }
