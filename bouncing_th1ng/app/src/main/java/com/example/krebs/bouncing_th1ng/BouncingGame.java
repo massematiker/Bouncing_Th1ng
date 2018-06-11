@@ -309,7 +309,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             ball.reset(screenX, screenY);
 
             int obstacleWidth = screenX / 8;
-            int obstacleHeight = screenY / 20;
+            int obstacleHeight = screenY / 15;
 
             // Build a wall of bricks
             numObstacles = 0;
