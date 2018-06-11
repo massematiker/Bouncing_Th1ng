@@ -2,6 +2,7 @@ package com.example.krebs.bouncing_th1ng;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +14,16 @@ public class HauptmenueActivity extends Activity {
     String name;
     EditText nameinput;
 
+    private SharedPreferences gamePrefs;
+    public static final String GAME_PREFS = "ArithmeticFile";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hauptmenue);
         configurenewgamebuttonhaupt();
         configurehighscorebutton();
+
 
 
     }
@@ -30,6 +35,14 @@ public class HauptmenueActivity extends Activity {
                 nameinput = (EditText) findViewById(R.id.nameinput);
                 name = nameinput.getText().toString();
                 startActivity(new Intent(HauptmenueActivity.this, BouncingGame.class));
+
+                // get The Name and save
+                gamePrefs = getSharedPreferences(GAME_PREFS, 0);
+                SharedPreferences.Editor nameEdit = gamePrefs.edit();
+
+                nameEdit.putString("name",name);
+                nameEdit.commit();
+
             }
         });
     }

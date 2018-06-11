@@ -9,11 +9,88 @@
 
     <ImageButton
         android:id="@+id/menubutton1"
-        android:layout_width="97dp"
+        android:layout_width="110dp"
         android:layout_height="93dp"
+        android:layout_marginEnd="47dp"
         android:layout_marginStart="448dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/menuicon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/highScore2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/highScore2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginStart="157dp"
+        android:text="2"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/highScore3"
+        app:layout_constraintEnd_toStartOf="@+id/menubutton1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highScore1" />
+
+    <TextView
+        android:id="@+id/highScore3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="17dp"
+        android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/highScore4"
+        app:layout_constraintEnd_toEndOf="@+id/highScore2"
+        app:layout_constraintStart_toStartOf="@+id/highScore2"
+        app:layout_constraintTop_toBottomOf="@+id/highScore2" />
+
+    <TextView
+        android:id="@+id/highScore1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="65dp"
+        android:text="1"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/highScore2"
+        app:layout_constraintEnd_toEndOf="@+id/highScore2"
+        app:layout_constraintStart_toStartOf="@+id/highScore2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/highScore5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="89dp"
+        android:text="5"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/highScore4"
+        app:layout_constraintStart_toStartOf="@+id/highScore4"
+        app:layout_constraintTop_toBottomOf="@+id/highScore4" />
+
+    <TextView
+        android:id="@+id/highScore4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="19dp"
+        android:text="4"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/highScore5"
+        app:layout_constraintEnd_toEndOf="@+id/highScore3"
+        app:layout_constraintStart_toStartOf="@+id/highScore3"
+        app:layout_constraintTop_toBottomOf="@+id/highScore3" />
+
 </android.support.constraint.ConstraintLayout>

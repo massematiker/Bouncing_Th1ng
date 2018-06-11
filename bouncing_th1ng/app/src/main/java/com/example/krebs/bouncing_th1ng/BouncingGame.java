@@ -33,6 +33,16 @@ import java.io.IOException;
 
 import static android.graphics.Bitmap.createScaledBitmap;
 
+// Imports for HighScore
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import android.content.SharedPreferences;
+
 public class BouncingGame extends Activity implements SensorEventListener {
 
     // gameView will be the view of the game
@@ -66,6 +76,10 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
     int difficulty =1;
 
+    //variables for the HighScore
+    private SharedPreferences gamePrefs;
+    public static final String GAME_PREFS = "ArithmeticFile";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +95,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
         mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        //Initilization for the HighScore
+        gamePrefs = getSharedPreferences(GAME_PREFS, 0);
 
         setContentView(bouncingView);
 
@@ -568,9 +585,124 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 soundPool.play(loseLifeID, 1, 1, 0, 0, 1);
                 ball.makeballfaster();
 
+
                 if(lives == 0){
                     paused = true;
                     //createObstaclesAndRestart();
+
+                    SharedPreferences.Editor scoreEdit = gamePrefs.edit();
+
+                    // If Score is not filled
+                    if(!gamePrefs.contains("1"))
+                        scoreEdit.putInt("1", score);
+                    else if (!gamePrefs.contains("2")) {
+                        if (gamePrefs.getInt("1", 0) < score) {
+                            scoreEdit.putInt("2", gamePrefs.getInt("1", 0));
+                            scoreEdit.putString("name2",gamePrefs.getString("name1","name"));
+                            scoreEdit.putInt("1", score);
+                            scoreEdit.putString("name1",gamePrefs.getString("name","name"));
+                        } else{
+                            scoreEdit.putInt("2", score);
+                            scoreEdit.putString("name2",gamePrefs.getString("name","name"));
+                        }
+
+                    }
+                    else if (!gamePrefs.contains("3")){
+                        if(gamePrefs.getInt("1",0)<score){
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putString("name2",gamePrefs.getString("name1","name"));
+                            scoreEdit.putInt("2", gamePrefs.getInt("1",0));
+                            scoreEdit.putInt("1", score);
+                            scoreEdit.putString("name1",gamePrefs.getString("name","name"));
+                        }
+                        else if(gamePrefs.getInt("2",0)<score){
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putInt("2", score);
+                            scoreEdit.putString("name2",gamePrefs.getString("name","name"));
+                        }
+                        else
+                            scoreEdit.putInt("3", score);
+                        scoreEdit.putString("name3",gamePrefs.getString("name","name"));
+                    }
+
+                    else if (!gamePrefs.contains("4")){
+                        if(gamePrefs.getInt("1",0)<score){
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putString("name2",gamePrefs.getString("name1","name"));
+                            scoreEdit.putInt("2", gamePrefs.getInt("1",0));
+                            scoreEdit.putString("name1",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("1", score);
+                        }
+                        else if(gamePrefs.getInt("2",0)<score){
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putString("name2",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("2", score);
+                        }
+                        else if(gamePrefs.getInt("3",0)<score){
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putString("name3",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("3", score);
+                        }
+                        else{
+                            scoreEdit.putInt("4", score);
+                            scoreEdit.putString("name4",gamePrefs.getString("name","name"));
+                        }
+
+                    }
+                    else if (!gamePrefs.contains("5")){
+                        if(gamePrefs.getInt("1",0)<score){
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putInt("2", gamePrefs.getInt("1",0));
+                            scoreEdit.putInt("1", score);
+                        }
+                        else if(gamePrefs.getInt("2",0)<score){
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putInt("2", score);
+                        }
+                        else if(gamePrefs.getInt("3",0)<score){
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putInt("3", score);
+                        }
+                        else if(gamePrefs.getInt("3",0)<score){
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", score);
+                        }
+                        else
+                            scoreEdit.putInt("5", score);
+
+                    }
+                    // If ScoreList is filled
+                    else {
+                        if(gamePrefs.getInt("1",0)<score)
+                            scoreEdit.putInt("1", score);
+                        else if(gamePrefs.getInt("2",0)<score)
+                            scoreEdit.putInt("2", score);
+                        else if(gamePrefs.getInt("3",0)<score)
+                            scoreEdit.putInt("3", score);
+                        else if(gamePrefs.getInt("4",0)<score)
+                            scoreEdit.putInt("4", score);
+                        else if(gamePrefs.getInt("5",0)<score)
+                            scoreEdit.putInt("5", score);
+                    }
+
+
+                    scoreEdit.commit();
+
+
                     startActivity(new Intent(BouncingGame.this, GameOverActivity.class));
 
 
