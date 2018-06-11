@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,22 +11,26 @@
         android:id="@+id/textView2"
         android:layout_width="207dp"
         android:layout_height="47dp"
+        android:layout_above="@+id/textView9"
+        android:layout_alignStart="@+id/textView13"
         android:text="Keyboard"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="7dp"
         tools:layout_editor_absoluteY="259dp" />
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="392dp"
-        android:layout_height="0dp"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_centerHorizontal="true"
         android:text="Goal ? Get The HIGHSCORE !"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="111dp"
         tools:layout_editor_absoluteY="38dp" />
@@ -35,73 +39,93 @@
         android:id="@+id/textView12"
         android:layout_width="207dp"
         android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginTop="75dp"
         android:text="Coins / Points"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="7dp"
         tools:layout_editor_absoluteY="98dp" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="140dp"
-        android:layout_height="35dp"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView7"
+        android:layout_marginStart="33dp"
         android:text="+10 per"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="213dp" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="140dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_toEndOf="@+id/textView9"
         android:text="Points x2"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="412dp"
         tools:layout_editor_absoluteY="213dp" />
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="140dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginBottom="102dp"
         android:text="No Obstacles"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="452dp"
         tools:layout_editor_absoluteY="271dp" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="148dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_below="@+id/textView12"
         android:text="Faster Keyboard"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="428dp"
         tools:layout_editor_absoluteY="145dp" />
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="80dp"
-        android:layout_height="0dp"
+        android:layout_width="87dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="96dp"
         android:text="Screens which Boost is Activated"
+        android:textAlignment="center"
         android:textColor="@android:color/black"
-        android:textSize="19sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="256dp"
         tools:layout_editor_absoluteY="91dp" />
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="268dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="13dp"
+        android:layout_toStartOf="@+id/imageView3"
         android:text="Move Keyboard with Touch or Accelorator"
         android:textColor="@android:color/black"
         android:textSize="13sp"
@@ -111,33 +135,41 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="101dp"
-        android:layout_height="67dp"
-        android:text="Input angle = Flat Output angle"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
+        android:layout_width="90dp"
+        android:layout_height="57dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="13dp"
+        android:text="Input angle = more Flat Output angle"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="306dp" />
 
     <TextView
         android:id="@+id/textView16"
-        android:layout_width="93dp"
-        android:layout_height="48dp"
+        android:layout_width="75dp"
+        android:layout_height="38dp"
+        android:layout_above="@+id/imageView5"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="167dp"
         android:text="Input angle = Output angle"
         android:textColor="@android:color/black"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="173dp"
         tools:layout_editor_absoluteY="295dp" />
 
     <TextView
         android:id="@+id/textView15"
-        android:layout_width="140dp"
-        android:layout_height="35dp"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/textView12"
         android:text="+1 per Second"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="italic"
         tools:layout_editor_absoluteX="42dp"
         tools:layout_editor_absoluteY="157dp" />
@@ -146,68 +178,94 @@
         android:id="@+id/textView5"
         android:layout_width="492dp"
         android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:text="You can see here your Lives, Score and Playtime"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         tools:layout_editor_absoluteX="7dp"
         tools:layout_editor_absoluteY="6dp" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="207dp"
-        android:layout_height="0dp"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView5"
+        android:layout_alignTop="@+id/textView12"
         android:text="Boosts"
         android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         tools:layout_editor_absoluteX="385dp"
         tools:layout_editor_absoluteY="98dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView"
-        android:layout_width="69dp"
-        android:layout_height="49dp"
-        app:srcCompat="@drawable/bitcoin"
+        android:layout_width="47dp"
+        android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="153dp"
+        android:layout_toEndOf="@+id/textView13"
+        android:background="@drawable/bitcoin"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="199dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView2"
         android:layout_width="49dp"
         android:layout_height="69dp"
-        app:srcCompat="@drawable/casio"
+        android:layout_alignEnd="@+id/textView10"
+        android:layout_alignTop="@+id/textView3"
+        android:background="@drawable/casio"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="527dp"
         tools:layout_editor_absoluteY="199dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView3"
         android:layout_width="27dp"
         android:layout_height="54dp"
-        app:srcCompat="@drawable/energy"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView15"
+        android:layout_marginEnd="22dp"
+        android:visibility="visible"
+        android:background="@drawable/energy"
         tools:layout_editor_absoluteX="385dp"
         tools:layout_editor_absoluteY="145dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView4"
         android:layout_width="79dp"
         android:layout_height="23dp"
-        app:srcCompat="@drawable/corny"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/textView9"
+        android:visibility="visible"
+        android:background="@drawable/corny"
         tools:layout_editor_absoluteX="358dp"
         tools:layout_editor_absoluteY="275dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView5"
         android:layout_width="169dp"
         android:layout_height="46dp"
-        app:srcCompat="@drawable/tastaturallefarben"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="120dp"
+        android:background="@drawable/keyboardred1"
+        android:visibility="visible"
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="333dp" />
 
     <ImageButton
         android:id="@+id/goplay"
-        android:layout_width="76dp"
-        android:layout_height="64dp"
+        android:layout_width="62dp"
+        android:layout_height="65dp"
+        android:layout_above="@+id/textView12"
+        android:layout_alignEnd="@+id/textView6"
+        android:layout_marginBottom="-75dp"
         android:background="@drawable/play"
         tools:layout_editor_absoluteX="516dp"
         tools:layout_editor_absoluteY="19dp" />
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>
