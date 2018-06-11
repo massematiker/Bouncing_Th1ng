@@ -202,4 +202,12 @@
         app:srcCompat="@drawable/tastaturallefarben"
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="333dp" />
+
+    <ImageButton
+        android:id="@+id/goplay"
+        android:layout_width="76dp"
+        android:layout_height="64dp"
+        android:background="@drawable/play"
+        tools:layout_editor_absoluteX="516dp"
+        tools:layout_editor_absoluteY="19dp" />
 </android.support.constraint.ConstraintLayout>

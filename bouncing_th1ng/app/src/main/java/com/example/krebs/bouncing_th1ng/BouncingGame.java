@@ -214,8 +214,18 @@ public class BouncingGame extends Activity implements SensorEventListener {
         int beep1ID = -1;
         int beep2ID = -1;
         int beep3ID = -1;
-        int loseLifeID = -1;
+
         int explodeID = -1;
+
+        //new Sounds            //richtige stelle   sound drin
+        int dosensound = -1;    //done            done
+        int plastik = -1;       //done            --
+        int rechnen = -1;       //done            done
+        int geld = -1;          //done            done
+        int loseLifeID = -1;    //done            done
+        int gameoverdeath =-1;  //done            done
+
+
 
         // The score
         int score = 0;
@@ -249,7 +259,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             // Bitmap initialisieren
             ballpic = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
             background = BitmapFactory.decodeResource(getResources(), R.drawable.gameboy);
-            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.tastaturallefarben);
+            paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardred);
 
             coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
             boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.energy);
@@ -306,11 +316,27 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 descriptor = assetManager.openFd("beep3.ogg");
                 beep3ID = soundPool.load(descriptor, 0);
 
-                descriptor = assetManager.openFd("loseLife.ogg");
-                loseLifeID = soundPool.load(descriptor, 0);
-
                 descriptor = assetManager.openFd("explode.ogg");
                 explodeID = soundPool.load(descriptor, 0);
+
+
+                descriptor = assetManager.openFd("doh.ogg");
+                loseLifeID = soundPool.load(descriptor, 0);
+
+                descriptor = assetManager.openFd("dosenoeffnen.ogg");
+                dosensound = soundPool.load(descriptor, 0);
+
+                descriptor = assetManager.openFd("cashregister.ogg");
+                geld = soundPool.load(descriptor, 0);
+
+                descriptor = assetManager.openFd("gameover.ogg");
+                gameoverdeath = soundPool.load(descriptor, 0);
+
+                descriptor = assetManager.openFd("typewriter.ogg");
+                rechnen = soundPool.load(descriptor, 0);
+
+                descriptor = assetManager.openFd("gameover.ogg");
+                plastik = soundPool.load(descriptor, 0);
 
             }catch(IOException e){
                 // Print an error message to the console
@@ -326,7 +352,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             ball.reset(screenX, screenY);
 
             int obstacleWidth = screenX / 8;
-            int obstacleHeight = screenY / 15;
+            int obstacleHeight = screenY / 20;
 
             // Build a wall of bricks
             numObstacles = 0;
@@ -359,31 +385,25 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                         numObstacles ++;
                     }
-
                 }
             }
 
-
-
             // minimum 5 undestroyable obstacles
-            while(AnzObstacles<=5){
+            while(AnzObstacles<=3){
                 int i =(int)((Math.random()*100)%numObstacles);
                 if(!obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
                     obstacles[i].setVisible();
                     AnzObstacles++;
                 }
-
             }
             //max 6 undestroyable obstacles
-            while(AnzObstacles>6){
+            while(AnzObstacles>4){
                 int i =(int)((Math.random()*100)%numObstacles);
                 if(obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
                     obstacles[i].setInvisible();
                     AnzObstacles--;
                 }
-
             }
-
             // minimum 3 undestroyable obstacles
             while(destObstacles<=2){
                 int i =(int)((Math.random()*100)%numObstacles);
@@ -407,7 +427,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
         }//createObstaclesAndRestart
 
         public void createnewObstacles(){
-
 
             int obstacleWidth = screenX / 8;
             int obstacleHeight = screenY / 20;
@@ -447,7 +466,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
             }
             // minimum 5 undestroyable obstacles
-            while(AnzObstacles<=5){
+            while(AnzObstacles<=3){
                 int i =(int)((Math.random()*100)%numObstacles);
                 if(!obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
                     obstacles[i].setVisible();
@@ -455,7 +474,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
             }
             //max 6 undestroyable obstacles
-            while(AnzObstacles>6){
+            while(AnzObstacles>4){
                 int i =(int)((Math.random()*100)%numObstacles);
                 if(obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
                     obstacles[i].setInvisible();
@@ -482,7 +501,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
             }
         }//createnewObstacles
 
-
         @Override
         public void run() {
             while (playing) {
@@ -506,11 +524,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 if (timeThisFrame >= 1) {
                     fps = 1000 / timeThisFrame;
                 }
-
             }
-
         }
-
         // Everything that needs to be updated goes in here
         // Movement, collision detection etc.
         public void update() {
@@ -533,9 +548,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             if(!boosted3) {
                                 if(collidesFromBottom && ball.getyVelocity()<0)ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
                                 if(collidesFromTop&& ball.getyVelocity()>0)ball.clearObstacleY(obstacles[i].getRect().top);
-                                ball.reverseYVelocity();}
-
-
+                                soundPool.play(explodeID, 1, 1, 0, 0, 1);
+                                ball.reverseYVelocity();
+                            }
                                 // create a new destroyable Obstacle if one is destroyed
                                 if (obstacles[i] instanceof DestroyableObstacle) {
                                     obstacles[i].setInvisible();
@@ -555,8 +570,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
                                         }
                                     }
                                 }
-
-                            soundPool.play(explodeID, 1, 1, 0, 0, 1);
                         }
                     }//with a ball
 
@@ -571,9 +584,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             obstacles[i].setObstacleMoving(2);
                             obstacles[j].setObstacleMoving(1);
                         }
-                        }
-
-
+                    }
                 }
             }// for
 
@@ -630,7 +641,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     // normaler Punktgewinn
                     else score += 5;
                     coins[i] = new Coin(screenX, screenY);
-                    soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+                    soundPool.play(geld, 1, 1, 0, 0, 1);
                 }// Collission Ball and coin
             }
 
@@ -640,15 +651,18 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 boostscore++;
                 switch (boost.getTyp()){
                     case 1: boosted1 = true;
+                            soundPool.play(dosensound, 1, 1, 0, 0, 1);
                             break;
                     case 2: boosted2 = true;
-                        break;
+                            soundPool.play(plastik, 1, 1, 0, 0, 1);
+                            break;
                     case 3: boosted3 = true;
-                        break;
+                            soundPool.play(rechnen, 1, 1, 0, 0, 1);
+                            break;
                 }
                 noboost=5;
                 boost = new Boost(screenX, screenY);
-                soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+
             }// Collission Ball and boost
 
 
@@ -662,7 +676,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Lose a life
                 createnewObstacles();
                 lives --;
-                soundPool.play(loseLifeID, 1, 1, 0, 0, 1);
+                if(lives>0)soundPool.play(loseLifeID, 1, 1, 0, 0, 1);
                 ball.makeballfaster();
 
 
@@ -779,13 +793,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             scoreEdit.putInt("5", score);
                     }
 
-
                     scoreEdit.commit();
-
-
+                    soundPool.play(gameoverdeath, 1, 1, 0, 0, 1);
                     startActivity(new Intent(BouncingGame.this, GameOverActivity.class));
-
-
                 }
 
             }// Bounce ball from bottom

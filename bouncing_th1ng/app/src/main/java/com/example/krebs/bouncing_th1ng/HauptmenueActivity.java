@@ -25,7 +25,6 @@ public class HauptmenueActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_hauptmenue);
         configurenewgamebuttonhaupt();
         configurehighscorebutton();
@@ -44,7 +43,7 @@ public class HauptmenueActivity extends Activity {
                 checkBoxTouch = (CheckBox) findViewById(R.id.cbTouch);
                 playTouch = checkBoxTouch.isChecked();
                 checkBoxHelp = (CheckBox) findViewById(R.id.cbHilfeScreen);
-                helpMenu = checkBoxTouch.isChecked();
+                helpMenu = checkBoxHelp.isChecked();
 
 
                 nameinput = (EditText) findViewById(R.id.nameinput);
