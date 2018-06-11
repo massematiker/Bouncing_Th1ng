@@ -555,21 +555,22 @@ public class BouncingGame extends Activity implements SensorEventListener {
                                 // create a new destroyable Obstacle if one is destroyed
                                 if (obstacles[i] instanceof DestroyableObstacle) {
                                     obstacles[i].setInvisible();
-                                    for (int j = 0; j < numObstacles; j++) {
-                                        if (i == j) continue;
-                                        if (!obstacles[j].getVisibility() && obstacles[j] instanceof DestroyableObstacle) {
-                                            boolean intersects = false;
-                                            // check if the new Obstacle intersects another one
-                                            for (int k = 0; k < numObstacles; k++) {
-                                                if (k == j) continue;
-                                                if (RectF.intersects(obstacles[j].getRect(), obstacles[k].getRect()))
-                                                    intersects = true;
-                                            }
-                                            if (intersects) continue;
-                                            obstacles[j].setVisible();
-                                            return;
+
+                                    boolean weiter = true;
+                                    while(weiter){
+                                        int j =(int)((Math.random()*100)%numObstacles);
+                                        boolean intersects = false;
+                                        for (int k = 0; k < numObstacles; k++) { //TODO
+                                            if (k == j) continue;
+                                            if (RectF.intersects(obstacles[j].getRect(), obstacles[k].getRect()))
+                                                intersects = true;
                                         }
+                                        if (intersects) continue;
+                                        obstacles[j] = new DestroyableObstacle(obstacles[j].getRow(),obstacles[j].getColumn(),(int)obstacles[j].getWidth(),(int)obstacles[j].getHeight());
+                                        obstacles[j].setVisible();
+                                        weiter = false;
                                     }
+
                                 }
                         }
                     }//with a ball

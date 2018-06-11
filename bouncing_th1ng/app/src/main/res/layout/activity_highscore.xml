@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +11,9 @@
         android:id="@+id/menubutton1"
         android:layout_width="110dp"
         android:layout_height="93dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginStart="448dp"
-        android:layout_marginTop="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/HighScoreText"
+        android:layout_marginEnd="15dp"
         android:background="@drawable/menuicon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/highScore2"
@@ -22,11 +22,12 @@
 
     <TextView
         android:id="@+id/highScore2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="18dp"
-        android:layout_marginEnd="156dp"
-        android:layout_marginStart="157dp"
+        android:layout_width="196dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="95dp"
         android:text="2"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/black"
@@ -38,9 +39,10 @@
 
     <TextView
         android:id="@+id/highScore3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="17dp"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/highScore2"
+        android:layout_below="@+id/highScore2"
         android:text="3"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/black"
@@ -52,10 +54,11 @@
 
     <TextView
         android:id="@+id/highScore1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="65dp"
+        android:layout_width="195dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/highScore2"
+        android:layout_alignStart="@+id/highScore2"
+        android:layout_marginBottom="-95dp"
         android:text="1"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/black"
@@ -67,9 +70,10 @@
 
     <TextView
         android:id="@+id/highScore5"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="89dp"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/highScore2"
+        android:layout_below="@+id/highScore4"
         android:text="5"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/black"
@@ -81,9 +85,10 @@
 
     <TextView
         android:id="@+id/highScore4"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="19dp"
+        android:layout_width="194dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/highScore2"
+        android:layout_centerVertical="true"
         android:text="4"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textColor="@android:color/black"
@@ -93,11 +98,84 @@
         app:layout_constraintStart_toStartOf="@+id/highScore3"
         app:layout_constraintTop_toBottomOf="@+id/highScore3" />
 
-    <LinearLayout
-        android:layout_width="586dp"
-        android:layout_height="370dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="6dp"></LinearLayout>
+    <TextView
+        android:id="@+id/Score2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/highScore2"
+        android:layout_toEndOf="@+id/highScore1"
+        android:text="Score"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="101dp" />
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/Score3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/highScore2"
+        android:layout_toEndOf="@+id/highScore2"
+        android:text="Score"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="146dp" />
+
+    <TextView
+        android:id="@+id/Score4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/highScore2"
+        android:text="Score"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="190dp" />
+
+    <TextView
+        android:id="@+id/Score5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/highScore5"
+        android:layout_toEndOf="@+id/highScore2"
+        android:text="Score"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <TextView
+        android:id="@+id/Score1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/highScore2"
+        android:layout_marginBottom="-95dp"
+        android:layout_toEndOf="@+id/highScore1"
+        android:text="Score"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="319dp"
+        tools:layout_editor_absoluteY="58dp" />
+
+    <TextView
+        android:id="@+id/HighScoreText"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="16dp"
+        android:text="HighScore:"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@android:color/black"
+        android:textSize="36sp" />
+
+</RelativeLayout>
+
