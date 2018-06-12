@@ -2,7 +2,7 @@ package com.example.krebs.bouncing_th1ng;
 
 import android.graphics.RectF;
 
-public class Coin {
+public class Coin extends RectF {
 
     private RectF rect;
 

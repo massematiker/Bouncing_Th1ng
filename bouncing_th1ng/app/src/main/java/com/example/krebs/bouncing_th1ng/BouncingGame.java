@@ -148,9 +148,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
     class BouncingView extends SurfaceView implements Runnable {
 
         Bitmap ballpic;
+        Bitmap ballpicblue;
         Bitmap background;
         Bitmap paddlepic;
+        Bitmap paddlepicblue;
         Bitmap coinpic;
+        Bitmap coinpicblue;
         Bitmap boostpic1;
         Bitmap boostpic2;
         Bitmap boostpic3;
@@ -267,12 +270,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             // Bitmap initialisieren
             ballpic = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
+            ballpicblue = BitmapFactory.decodeResource(getResources(), R.drawable.pacmanblue);
             background = BitmapFactory.decodeResource(getResources(), R.drawable.gameboy);
             paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardred);
-
+            paddlepicblue = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardblue);
             coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
+            coinpicblue = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoinblue);
             boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.clubmate);
-            boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
+            boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.rasperry);
             boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.logitech);
             obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ps4);
             destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.xbox);
@@ -647,6 +652,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     // normaler Punktgewinn
                     else score += 5;
                     coins[i] = new Coin(screenX, screenY);
+                    for(int j=0;j<numcoins;j++){
+                        if(RectF.intersects(coins[i],coins[j])&&j!=i){
+                            coins[i] = new Coin(screenX, screenY);
+                        }
+                    }
+
                     soundPool.play(geld, 1, 1, 0, 0, 1);
                 }// Collission Ball and coin
             }
@@ -656,13 +667,16 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 boost.setInvisible();
                 boostscore++;
                 switch (boost.getTyp()){
-                    case 1: boosted1 = true;
+                    case 1: if(boosted1) boostedtime1+=10;
+                            boosted1 = true;
                             soundPool.play(flaschensound, 1, 1, 0, 0, 1);
                             break;
-                    case 2: boosted2 = true;
+                    case 2: if(boosted2) boostedtime2+=10;
+                            boosted2 = true;
                             soundPool.play(rechnen, 1, 1, 0, 0, 1);
                             break;
-                    case 3: boosted3 = true;
+                    case 3: if(boosted3) boostedtime3+=10;
+                            boosted3 = true;
                             soundPool.play(mouse, 1, 1, 0, 0, 1);
                             break;
                 }
@@ -846,16 +860,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Lock the canvas ready to draw
                 canvas = ourHolder.lockCanvas();
 
+                //ballpic und coin pic nach unten verlegt zu draw the ball
 
-                ballpic = createScaledBitmap(ballpic, (int) ball.ballWidth, (int) ball.ballHeight,false);
                 background = createScaledBitmap(background,screenX,screenY,false);
-                paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
-                coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
-
                                                             // Hier die Werte aus Boost - Case 1 übernehmen
                 boostpic1 = createScaledBitmap(boostpic1, 50, 190, false );
                                                             // Hier die Werte aus Boost - Case 2 übernehmen
-                boostpic2 = createScaledBitmap(boostpic2, 90, 140, false );
+                boostpic2 = createScaledBitmap(boostpic2, 140, 90, false );
                                                             // Hier die Werte aus Boost - Case 3 übernehmen
                 boostpic3 = createScaledBitmap(boostpic3, 180, 100, false );
                 obstaclepic = createScaledBitmap(obstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
@@ -874,8 +885,16 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 if (boosted1){ paddle.setPaddleSpeed(800);}
                 else paddle.setPaddleSpeed(450);
                 // Draw the paddle
-                //canvas.drawRect(paddle.getRect(), paint);
-                canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
+                if(boosted1){
+                    paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
+                    canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
+                }
+                else{
+                    paddlepicblue = createScaledBitmap(paddlepicblue, (int)paddle.getlength(),(int) paddle.getheight(),false);
+                    canvas.drawBitmap(paddlepicblue, paddle.getX(),paddle.getY(),null);
+
+                }
+
 
                 //Counter für noboost // zählt jede sekunde
                 if ((System.currentTimeMillis()-starttime)/1000>timer){
@@ -913,13 +932,26 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     difficulty++;
                 }
                 // Draw the ball
-                canvas.drawBitmap(ballpic, ball.rect.left,ball.rect.bottom,null);
+                if(boosted3){
+                    ballpicblue = createScaledBitmap(ballpicblue, (int) ball.ballWidth, (int) ball.ballHeight,false);
+                    canvas.drawBitmap(ballpicblue, ball.rect.left,ball.rect.bottom,null);
+                }
+                else{
+                    ballpic = createScaledBitmap(ballpic, (int) ball.ballWidth, (int) ball.ballHeight,false);
+                    canvas.drawBitmap(ballpic, ball.rect.left,ball.rect.bottom,null);
+                }
 
                 // Draw the coin
                 for (int i=0; i<numcoins; i++) {
                     if (coins[i].getVisibility()) {
-                        canvas.drawBitmap(coinpic, coins[i].getX(), coins[i].getY(), null);
-                        //canvas.drawRect(coin.getRect(), paint);
+                        if (boosted2){
+                            coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
+                            canvas.drawBitmap(coinpic, coins[i].getX(), coins[i].getY(), null);
+                        }
+                        else {
+                            coinpicblue = createScaledBitmap(coinpicblue, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
+                            canvas.drawBitmap(coinpicblue, coins[i].getX(), coins[i].getY(), null);
+                        }
                     }
                 }
 
@@ -966,14 +998,16 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Draw the score, Lives, and Time played
                 paint.setTextSize(40);
 
+                //if(boosted2) paint.setColor(Color.argb(255,  0, 0, 255));
                 canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime + "  Gesammelte Boosts: "+boostscore, 10,50, paint);
 
-                if(boosted1)
-                    canvas.drawText("Schnelleres Paddle !!", (screenX/2)-140,screenY/3, paint);
-                if(boosted2)
-                    canvas.drawText("Doppelte Punkte !!", (screenX/2)-140,(screenY/3)+40, paint);
-                if(boosted3)
-                    canvas.drawText("Keine Hindernisse !!", (screenX/2)-140,(screenY/3)+80, paint);
+                paint.setTextSize(80);
+                if(boosted1||boosted2||boosted3){
+                    paint.setTextSize(80);
+                    paint.setColor(Color.argb(255,  0, 0, 255));
+                    canvas.drawText("Boosted", (screenX/2)-140,screenY/3, paint);
+                }
+
 
                 // Has the player cleared the screen?
                 if(score == numObstacles * 10){

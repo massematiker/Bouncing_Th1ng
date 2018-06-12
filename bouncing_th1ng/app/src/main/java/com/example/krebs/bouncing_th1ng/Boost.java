@@ -35,15 +35,15 @@ public class Boost {
     public Boost(int screenX, int screenY){
         // 130 pixels wide and 20 pixels high
 
-        // Größenangabe für Boosts je nach art muss auch in Bouncinggame boostpic1 angegeben werden
+        // Größenangabe für Boosts je nach art muss auch in Bouncinggame boostpic1,2,3 angegeben werden
         //1 Paddle schneller - Energy      //2 mehr Punkte - Casio     //3 Hindernisse unsichtbar - Corny
         typ = (int) ((Math.random()*100%3)+1);
         switch (typ){
             case 1: height = 190;
                     length = 50;
                     break;
-            case 2: height = 140;
-                    length = 90;
+            case 2: height = 90;
+                    length = 140;
                     break;
             case 3: height = 100;
                     length = 180;
