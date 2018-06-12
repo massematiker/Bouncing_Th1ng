@@ -278,7 +278,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
             coinpicblue = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoinblue);
             boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.clubmate);
-            boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.rasperry);
+            boostpic2 = BitmapFactory.decodeResource(getResources(), R.mipmap.rasperry);
             boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.logitech);
             obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ps4);
             destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.xbox);
