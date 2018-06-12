@@ -112,7 +112,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         if(event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
             return;
 
-        if(!touch) {
+        if(touch) {
             // Hier wird der Sensor abgefragt und die X-Achse entsprechend verändert. Durch vz=0 kann das Trackpas nicht nach oben oder unten
             switch (mDisplay.getRotation()) {
                 case Surface.ROTATION_0:
@@ -1037,7 +1037,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         @Override
         public boolean onTouchEvent(MotionEvent motionEvent) {
 
-            if(touch){
+            if(!touch){
                 switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
                     // Player has touched the screen
