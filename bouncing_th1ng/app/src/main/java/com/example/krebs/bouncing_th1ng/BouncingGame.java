@@ -112,7 +112,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         if(event.sensor.getType() != Sensor.TYPE_ACCELEROMETER)
             return;
 
-        if(!touch) {
+        if(touch) {
             // Hier wird der Sensor abgefragt und die X-Achse entsprechend verändert. Durch vz=0 kann das Trackpas nicht nach oben oder unten
             switch (mDisplay.getRotation()) {
                 case Surface.ROTATION_0:
@@ -237,14 +237,23 @@ public class BouncingGame extends Activity implements SensorEventListener {
         int lives = 3;
 
         public void setPaddleMove(float move){
-            if(move<0) {
+            if(move <0.4 && move >-0.4){
+                paddle.setMovementState(0);
+            }
+            else if(move<0) {
                 move = -move;
                 paddle.setMovementState(1);
-                paddle.setPaddleSpeed(move *80);
+                double speed = move/2 * paddle.getPaddleSpeed();
+                if(speed >450 && !boosted1) speed = 450;
+                if(speed >800 && boosted1) speed = 800;
+                paddle.setPaddleSpeed((float)speed);
             }
             else {
                 paddle.setMovementState(2);
-                paddle.setPaddleSpeed(move *80);
+                double speed = move/2 * paddle.getPaddleSpeed();
+                if(speed >450 && !boosted1) speed = 450;
+                if(speed >800 && boosted1) speed = 800;
+                paddle.setPaddleSpeed((float)speed);
             }
         }
 
@@ -590,14 +599,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 //ball hits the paddle left or right and is not in alternateDirection Mode
                 if((ball.getRect().centerX()<paddle.getRect().centerX()-50 || ball.getRect().centerX()>paddle.getRect().centerX()+50)&& ballAlternateDirection == false){
-                    ball.setXVelocity((int)(ball.getxVelocity()*1.12));
-                    ball.setYVelocity((int)(ball.getyVelocity()/1.12));
+                    ball.setXVelocity((int)(ball.getxVelocity()*1.15));
+                    ball.setYVelocity((int)(ball.getyVelocity()/1.15));
                     ballAlternateDirection = true;
                 }
                 // ball hits the paddle in the middle and is in alternateDirection Mode
                 else if((ball.getRect().centerX()>paddle.getRect().centerX()-paddle.getlength()/4 || ball.getRect().centerX()<paddle.getRect().centerX()+paddle.getlength()/4)&&ballAlternateDirection){
-                    ball.setXVelocity((int)(ball.getxVelocity()/1.12));
-                    ball.setYVelocity((int)(ball.getyVelocity()*1.12));
+                    ball.setXVelocity((int)(ball.getxVelocity()/1.15));
+                    ball.setYVelocity((int)(ball.getyVelocity()*1.15));
                     ballAlternateDirection = false;
                 }
 
@@ -1023,7 +1032,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         @Override
         public boolean onTouchEvent(MotionEvent motionEvent) {
 
-            if(touch){
+            if(!touch){
                 switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
                     // Player has touched the screen
