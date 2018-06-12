@@ -159,6 +159,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         Bitmap boostpic3;
         Bitmap obstaclepic;
         Bitmap destroyableobstaclepic;
+        Bitmap keyboardbluepic;
 
         //booleans for the ball direction
         boolean ballAlternateDirection = false;
@@ -569,7 +570,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                                     while(weiter){
                                         int j =(int)((Math.random()*100)%numObstacles);
                                         boolean intersects = false;
-                                        for (int k = 0; k < numObstacles; k++) { //TODO
+                                        for (int k = 0; k < numObstacles; k++) {
                                             if (k == j) continue;
                                             if (RectF.intersects(obstacles[j].getRect(), obstacles[k].getRect()))
                                                 intersects = true;
