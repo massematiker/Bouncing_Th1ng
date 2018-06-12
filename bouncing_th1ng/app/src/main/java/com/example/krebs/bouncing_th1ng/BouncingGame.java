@@ -652,12 +652,19 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     if(boosted2) score += 10;
                     // normaler Punktgewinn
                     else score += 5;
-                    coins[i] = new Coin(screenX, screenY);
-                    for(int j=0;j<numcoins;j++){
-                        if(RectF.intersects(coins[i],coins[j])&&j!=i){
-                            coins[i] = new Coin(screenX, screenY);
+                    boolean repeat = true;
+
+                    while(repeat){
+                        repeat = false;
+                        coins[i] = new Coin(screenX, screenY);
+                        for(int j=0;j<numcoins;j++){
+                            if(RectF.intersects(coins[i].getRect(),coins[j].getRect())&&j!=i){
+                                repeat = true;
+                            }
                         }
-                    }
+                    } 
+
+
 
                     soundPool.play(geld, 1, 1, 0, 0, 1);
                 }// Collission Ball and coin
@@ -708,8 +715,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     SharedPreferences.Editor scoreEdit = gamePrefs.edit();
 
                     // If Score is not filled
-                    if(!gamePrefs.contains("1"))
+                    if(!gamePrefs.contains("1")){
                         scoreEdit.putInt("1", score);
+                        scoreEdit.putString("name1",gamePrefs.getString("name","name"));
+                    }
+
                     else if (!gamePrefs.contains("2")) {
                         if (gamePrefs.getInt("1", 0) < score) {
                             scoreEdit.putInt("2", gamePrefs.getInt("1", 0));
@@ -775,6 +785,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     }
                     else if (!gamePrefs.contains("5")){
                         if(gamePrefs.getInt("1",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putString("name2",gamePrefs.getString("name1","name"));
+                            scoreEdit.putString("name1",gamePrefs.getString("name","name"));
                             scoreEdit.putInt("5", gamePrefs.getInt("4",0));
                             scoreEdit.putInt("4", gamePrefs.getInt("3",0));
                             scoreEdit.putInt("3", gamePrefs.getInt("2",0));
@@ -782,36 +797,79 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             scoreEdit.putInt("1", score);
                         }
                         else if(gamePrefs.getInt("2",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putString("name2",gamePrefs.getString("name","name"));
                             scoreEdit.putInt("5", gamePrefs.getInt("4",0));
                             scoreEdit.putInt("4", gamePrefs.getInt("3",0));
                             scoreEdit.putInt("3", gamePrefs.getInt("2",0));
                             scoreEdit.putInt("2", score);
                         }
                         else if(gamePrefs.getInt("3",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putString("name3",gamePrefs.getString("name","name"));
                             scoreEdit.putInt("5", gamePrefs.getInt("4",0));
                             scoreEdit.putInt("4", gamePrefs.getInt("3",0));
                             scoreEdit.putInt("3", score);
                         }
-                        else if(gamePrefs.getInt("3",0)<score){
+                        else if(gamePrefs.getInt("4",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name","name"));
                             scoreEdit.putInt("5", gamePrefs.getInt("4",0));
                             scoreEdit.putInt("4", score);
                         }
-                        else
+                        else{
                             scoreEdit.putInt("5", score);
+                            scoreEdit.putString("name5",gamePrefs.getString("name","name"));
+                        }
+
 
                     }
                     // If ScoreList is filled
                     else {
-                        if(gamePrefs.getInt("1",0)<score)
+                        if(gamePrefs.getInt("1",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putString("name2",gamePrefs.getString("name1","name"));
+                            scoreEdit.putString("name1",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
+                            scoreEdit.putInt("2", gamePrefs.getInt("1",0));
                             scoreEdit.putInt("1", score);
-                        else if(gamePrefs.getInt("2",0)<score)
+                        }
+                        else if(gamePrefs.getInt("2",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putString("name3",gamePrefs.getString("name2","name"));
+                            scoreEdit.putString("name2",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
+                            scoreEdit.putInt("3", gamePrefs.getInt("2",0));
                             scoreEdit.putInt("2", score);
-                        else if(gamePrefs.getInt("3",0)<score)
+                        }
+                        else if(gamePrefs.getInt("3",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name3","name"));
+                            scoreEdit.putString("name3",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
+                            scoreEdit.putInt("4", gamePrefs.getInt("3",0));
                             scoreEdit.putInt("3", score);
-                        else if(gamePrefs.getInt("4",0)<score)
+                        }
+                        else if(gamePrefs.getInt("4",0)<score){
+                            scoreEdit.putString("name5",gamePrefs.getString("name4","name"));
+                            scoreEdit.putString("name4",gamePrefs.getString("name","name"));
+                            scoreEdit.putInt("5", gamePrefs.getInt("4",0));
                             scoreEdit.putInt("4", score);
-                        else if(gamePrefs.getInt("5",0)<score)
+                        }
+                        else if (gamePrefs.getInt("5",0)<score){
                             scoreEdit.putInt("5", score);
+                            scoreEdit.putString("name5",gamePrefs.getString("name","name"));
+                        }
+
                     }
 
                     scoreEdit.commit();
