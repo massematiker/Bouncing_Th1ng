@@ -39,14 +39,14 @@ public class Boost {
         //1 Paddle schneller - Energy      //2 mehr Punkte - Casio     //3 Hindernisse unsichtbar - Corny
         typ = (int) ((Math.random()*100%3)+1);
         switch (typ){
-            case 1: height = 150;
-                    length = 75;
+            case 1: height = 190;
+                    length = 50;
                     break;
             case 2: height = 140;
                     length = 90;
                     break;
-            case 3: height = 60;
-                    length = 200;
+            case 3: height = 100;
+                    length = 180;
                     break;
         }
         x = (float) (screenX/((Math.random()*100%4.8)+1.2));

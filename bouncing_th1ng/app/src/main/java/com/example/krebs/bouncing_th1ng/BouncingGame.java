@@ -212,19 +212,18 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
         // For sound FX
         SoundPool soundPool;
-        int beep1ID = -1;
-        int beep2ID = -1;
-        int beep3ID = -1;
 
         int explodeID = -1;
 
         //new Sounds            //richtige stelle   sound drin
-        int dosensound = -1;    //done            done
-        int plastik = -1;       //done            --
+        int flaschensound = -1;    //done            done
+        int mouse = -1;       //done            --
         int rechnen = -1;       //done            done
         int geld = -1;          //done            done
         int loseLifeID = -1;    //done            done
         int gameoverdeath =-1;  //done            done
+        int obstaclesound = -1;
+        int paddlesound = -1;
 
 
 
@@ -263,11 +262,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
             paddlepic = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardred);
 
             coinpic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
-            boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.energy);
+            boostpic1 = BitmapFactory.decodeResource(getResources(), R.drawable.clubmate);
             boostpic2 = BitmapFactory.decodeResource(getResources(), R.drawable.casio);
-            boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.corny);
-            obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordnerbraun);
-            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ordner);
+            boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.logitech);
+            obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ps4);
+            destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.xbox);
 
 
             // Initialize ourHolder and paint objects
@@ -308,24 +307,20 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 AssetFileDescriptor descriptor;
 
                 // Load our fx in memory ready for use
-                descriptor = assetManager.openFd("beep1.ogg");
-                beep1ID = soundPool.load(descriptor, 0);
-
-                descriptor = assetManager.openFd("beep2.ogg");
-                beep2ID = soundPool.load(descriptor, 0);
-
-                descriptor = assetManager.openFd("beep3.ogg");
-                beep3ID = soundPool.load(descriptor, 0);
+                descriptor = assetManager.openFd("keyboard.ogg");
+                paddlesound = soundPool.load(descriptor, 0);
 
                 descriptor = assetManager.openFd("explode.ogg");
                 explodeID = soundPool.load(descriptor, 0);
 
+                descriptor = assetManager.openFd("obstacle.ogg");
+                obstaclesound = soundPool.load(descriptor, 0);
 
                 descriptor = assetManager.openFd("doh.ogg");
                 loseLifeID = soundPool.load(descriptor, 0);
 
-                descriptor = assetManager.openFd("dosenoeffnen.ogg");
-                dosensound = soundPool.load(descriptor, 0);
+                descriptor = assetManager.openFd("flaschensound.ogg");
+                flaschensound = soundPool.load(descriptor, 0);
 
                 descriptor = assetManager.openFd("cashregister.ogg");
                 geld = soundPool.load(descriptor, 0);
@@ -336,8 +331,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 descriptor = assetManager.openFd("typewriter.ogg");
                 rechnen = soundPool.load(descriptor, 0);
 
-                descriptor = assetManager.openFd("gameover.ogg");
-                plastik = soundPool.load(descriptor, 0);
+                descriptor = assetManager.openFd("click.ogg");
+                mouse = soundPool.load(descriptor, 0);
 
             }catch(IOException e){
                 // Print an error message to the console
@@ -549,7 +544,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             if(!boosted3) {
                                 if(collidesFromBottom && ball.getyVelocity()<0)ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
                                 if(collidesFromTop&& ball.getyVelocity()>0)ball.clearObstacleY(obstacles[i].getRect().top);
-                                soundPool.play(explodeID, 1, 1, 0, 0, 1);
+                                soundPool.play(obstaclesound, 1, 1, 0, 0, 1);
                                 ball.reverseYVelocity();
                             }
                                 // create a new destroyable Obstacle if one is destroyed
@@ -629,7 +624,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 if(ball.getyVelocity()>0){
                     ball.reverseYVelocity();
                     ball.clearObstacleY(paddle.getRect().top - 2);
-                    soundPool.play(beep1ID, 1, 1, 0, 0, 1);
+                    soundPool.play(paddlesound, 1, 1, 0, 0, 1);
                 }
 
             }// Collission Ball and Paddle
@@ -653,13 +648,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 boostscore++;
                 switch (boost.getTyp()){
                     case 1: boosted1 = true;
-                            soundPool.play(dosensound, 1, 1, 0, 0, 1);
+                            soundPool.play(flaschensound, 1, 1, 0, 0, 1);
                             break;
                     case 2: boosted2 = true;
-                            soundPool.play(plastik, 1, 1, 0, 0, 1);
+                            soundPool.play(rechnen, 1, 1, 0, 0, 1);
                             break;
                     case 3: boosted3 = true;
-                            soundPool.play(rechnen, 1, 1, 0, 0, 1);
+                            soundPool.play(mouse, 1, 1, 0, 0, 1);
                             break;
                 }
                 noboost=5;
@@ -806,21 +801,21 @@ public class BouncingGame extends Activity implements SensorEventListener {
             if(ball.getRect().top < 0){
                 ball.reverseYVelocity();
                 ball.clearObstacleY(24);
-                soundPool.play(beep2ID, 1, 1, 0, 0, 1);
+                //soundPool.play(explodeID, 1, 1, 0, 0, 1);
             }// Bounce from Top
 
             // If the ball hits left wall bounce
             if(ball.getRect().left < 0){
                 ball.reverseXVelocity();
                 ball.clearObstacleX(4);
-                soundPool.play(beep3ID, 1, 1, 0, 0, 1);
+                //soundPool.play(explodeID, 1, 1, 0, 0, 1);
             }
 
             // If the ball hits right wall bounce
             if(ball.getRect().right > screenX - 20){
                 ball.reverseXVelocity();
                 ball.clearObstacleX(screenX - 44);
-                soundPool.play(beep3ID, 1, 1, 0, 0, 1);
+                //soundPool.play(explodeID, 1, 1, 0, 0, 1);
             }
 
             // Pause if cleared screen
@@ -849,11 +844,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
 
                                                             // Hier die Werte aus Boost - Case 1 übernehmen
-                boostpic1 = createScaledBitmap(boostpic1, 75, 150, false );
+                boostpic1 = createScaledBitmap(boostpic1, 50, 190, false );
                                                             // Hier die Werte aus Boost - Case 2 übernehmen
                 boostpic2 = createScaledBitmap(boostpic2, 90, 140, false );
                                                             // Hier die Werte aus Boost - Case 3 übernehmen
-                boostpic3 = createScaledBitmap(boostpic3, 200, 60, false );
+                boostpic3 = createScaledBitmap(boostpic3, 180, 100, false );
                 obstaclepic = createScaledBitmap(obstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
                 destroyableobstaclepic = createScaledBitmap(destroyableobstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
 

@@ -9,12 +9,12 @@
 
     <EditText
         android:id="@+id/nameinput"
-        android:layout_width="193dp"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="37dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginStart="129dp"
+        android:layout_marginBottom="86dp"
+        android:layout_marginStart="139dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name eingeben"
@@ -29,7 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="54dp"
         android:layout_marginTop="48dp"
-        android:text="The Bouncing-Th1ng"
+        android:text="The lonely n3rd"
         android:textColor="@android:color/black"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/cbTouch"
@@ -37,13 +37,13 @@
         app:layout_constraintHorizontal_bias="0.342"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="The Bouncing-Th1ng" />
+        tools:text="N3rd Alone" />
 
 
     <ImageButton
         android:id="@+id/newgamebuttonhaupt"
-        android:layout_width="91dp"
-        android:layout_height="75dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
 
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -57,8 +57,8 @@
 
     <ImageButton
         android:id="@+id/highscorebutton"
-        android:layout_width="82dp"
-        android:layout_height="70dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignBottom="@+id/gamename"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="33dp"
@@ -70,9 +70,8 @@
         android:id="@+id/cbHilfeScreen"
         android:layout_width="151dp"
         android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/cbTouch"
-        android:layout_marginEnd="198dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/gamename"
         android:text="Hilfe anzeigen"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,11 +81,10 @@
     <CheckBox
         android:id="@+id/cbTouch"
         android:layout_width="wrap_content"
-        android:layout_height="38dp"
+        android:layout_height="33dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="74dp"
-        android:text="Enable Touch"
+        android:layout_toEndOf="@+id/newgamebuttonhaupt"
+        android:text="Neigungssteureung"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
