@@ -936,7 +936,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 canvas.drawColor(Color.WHITE);
                 canvas.drawBitmap(background, (0), (0), null);
 
-
+                if(boosted1||boosted2||boosted3){
+                    paint.setTextSize(80);
+                    paint.setColor(Color.argb(255,  0, 0, 255));
+                    canvas.drawText("Boosted", (screenX/2)-140,screenY/3, paint);
+                }
 
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
@@ -945,15 +949,13 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 else paddle.setPaddleSpeed(450);
                 // Draw the paddle
                 if(boosted1){
+                    paddlepicblue = createScaledBitmap(paddlepicblue, (int)paddle.getlength(),(int) paddle.getheight(),false);
+                    canvas.drawBitmap(paddlepicblue, paddle.getX(),paddle.getY(),null);
+                }
+                else{
                     paddlepic = createScaledBitmap(paddlepic, (int)paddle.getlength(),(int) paddle.getheight(),false);
                     canvas.drawBitmap(paddlepic, paddle.getX(),paddle.getY(),null);
                 }
-                else{
-                    paddlepicblue = createScaledBitmap(paddlepicblue, (int)paddle.getlength(),(int) paddle.getheight(),false);
-                    canvas.drawBitmap(paddlepicblue, paddle.getX(),paddle.getY(),null);
-
-                }
-
 
                 //Counter für noboost // zählt jede sekunde
                 if ((System.currentTimeMillis()-starttime)/1000>timer){
@@ -1004,12 +1006,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 for (int i=0; i<numcoins; i++) {
                     if (coins[i].getVisibility()) {
                         if (boosted2){
-                            coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
-                            canvas.drawBitmap(coinpic, coins[i].getX(), coins[i].getY(), null);
-                        }
-                        else {
                             coinpicblue = createScaledBitmap(coinpicblue, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
                             canvas.drawBitmap(coinpicblue, coins[i].getX(), coins[i].getY(), null);
+                        }
+                        else {
+                            coinpic = createScaledBitmap(coinpic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
+                            canvas.drawBitmap(coinpic, coins[i].getX(), coins[i].getY(), null);
                         }
                     }
                 }
@@ -1060,12 +1062,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 //if(boosted2) paint.setColor(Color.argb(255,  0, 0, 255));
                 canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playtime + "  Gesammelte Boosts: "+boostscore, 10,50, paint);
 
-                paint.setTextSize(80);
-                if(boosted1||boosted2||boosted3){
-                    paint.setTextSize(80);
-                    paint.setColor(Color.argb(255,  0, 0, 255));
-                    canvas.drawText("Boosted", (screenX/2)-140,screenY/3, paint);
-                }
+
 
 
                 // Has the player cleared the screen?
