@@ -662,7 +662,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                                 repeat = true;
                             }
                         }
-                    } 
+                    }
 
 
 
