@@ -11,6 +11,7 @@ public class Ball {
     float ballWidth = 20;
     float ballHeight = 20;
 
+
     public Ball(int screenX, int screenY){
 
         // Start the ball travelling straight up at 100 pixels per second
@@ -95,4 +96,5 @@ public class Ball {
     public float getBallHeight() {
         return ballHeight;
     }
+
 }
