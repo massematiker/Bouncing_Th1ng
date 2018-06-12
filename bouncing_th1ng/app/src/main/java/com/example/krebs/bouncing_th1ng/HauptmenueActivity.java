@@ -29,6 +29,10 @@ public class HauptmenueActivity extends Activity {
         configurenewgamebuttonhaupt();
         configurehighscorebutton();
 
+        gamePrefs = getSharedPreferences(GAME_PREFS, 0);
+        SharedPreferences.Editor nameEdit = gamePrefs.edit();
+        nameinput = (EditText) findViewById(R.id.nameinput);
+        nameinput.setText(gamePrefs.getString("name","name"));
 
 
     }
