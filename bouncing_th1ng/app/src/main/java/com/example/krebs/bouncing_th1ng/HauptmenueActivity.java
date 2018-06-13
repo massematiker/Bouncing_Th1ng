@@ -3,21 +3,19 @@ package com.example.krebs.bouncing_th1ng;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class HauptmenueActivity extends Activity {
-    String name;
-    EditText nameinput;
-    boolean playTouch;
-    boolean helpMenu;
-    CheckBox checkBoxTouch;
-    CheckBox checkBoxHelp;
+    private String name;
+    private EditText nameInput;
+    private boolean playTouch;
+    private boolean helpMenu;
+    private CheckBox checkBoxTouch;
+    private CheckBox checkBoxHelp;
 
     private SharedPreferences gamePrefs;
     public static final String GAME_PREFS = "ArithmeticFile";
@@ -26,32 +24,36 @@ public class HauptmenueActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hauptmenue);
-        configurenewgamebuttonhaupt();
-        configurehighscorebutton();
+        configureNewGameButtonMain();
+        ConfigureHighScoreButton();
 
         gamePrefs = getSharedPreferences(GAME_PREFS, 0);
         SharedPreferences.Editor nameEdit = gamePrefs.edit();
-        nameinput = (EditText) findViewById(R.id.nameinput);
-        nameinput.setText(gamePrefs.getString("name","name"));
+        nameInput = (EditText) findViewById(R.id.nameinput);
+        nameInput.setText(gamePrefs.getString("name","name"));
 
 
     }
-    private void configurenewgamebuttonhaupt(){
+
+    /**
+     * here is configured what happens if the NewGameButton is pressed
+     */
+    private void configureNewGameButtonMain(){
 
         ImageButton newgameButton = (ImageButton) findViewById(R.id.newgamebuttonhaupt);
         newgameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //Schreibt Inhalt der Checkboxen in Boolean
+                //writes the checkboxes to a boolean
                 checkBoxTouch = (CheckBox) findViewById(R.id.cbTouch);
                 playTouch = checkBoxTouch.isChecked();
                 checkBoxHelp = (CheckBox) findViewById(R.id.cbHilfeScreen);
                 helpMenu = checkBoxHelp.isChecked();
 
 
-                nameinput = (EditText) findViewById(R.id.nameinput);
-                name = nameinput.getText().toString();
+                nameInput = (EditText) findViewById(R.id.nameinput);
+                name = nameInput.getText().toString();
 
 
                 // get The Name and save
@@ -68,8 +70,10 @@ public class HauptmenueActivity extends Activity {
             }
         });
     }
-
-    private void  configurehighscorebutton(){
+    /**
+     * here is configured what happens if the HighScoreButton is pressed
+     */
+    private void  ConfigureHighScoreButton(){
         ImageButton highscorebutton = (ImageButton ) findViewById(R.id.highscorebutton);
         highscorebutton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -34,7 +34,8 @@
         <activity
             android:name=".HelpActivity"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name=".IntroActivity"></activity>
     </application>
 
 </manifest>

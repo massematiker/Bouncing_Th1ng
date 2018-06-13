@@ -50,40 +50,81 @@ public class Paddle {
         paddleSpeed = 450;
     }
 
-    // This is a getter method to make the rectangle that
-    // defines our paddle available in BreakoutView class
+
+    /**
+     * This is a getter method to make the rectangle that
+     * defines our paddle available in BreakoutView class
+     * @return
+     */
     public RectF getRect(){
         return rect;
     }
 
-    // This method will be used to change/set if the paddle is going left, right or nowhere
+    /**
+     * This method will be used to change/set if the paddle is going left, right or nowhere
+      */
+
+    /**
+     * set the Paddle Direction
+     * @param state STOPPED = 0     LEFT = 1    RIGHT = 2
+     */
     public void setMovementState(int state){
         paddleMoving = state;
     }
 
+    /**
+     * return X coordinate of the Paddle
+     * @return
+     */
     public float getX(){
         return x;
     }
+    /**
+     * return Y coordinate of the Paddle
+     * @return
+     */
     public float getY(){
         return y;
     }
+
+    /**
+     * return the Legth of the Paddle
+     * @return
+     */
     public float getlength(){
         return length;
     }
+
+    /**
+     * return the height of the paddle
+     * @return
+     */
     public float getheight(){
         return height;
     }
+
+    /**
+     * return the Paddel Moving State
+     * @return STOPPED = 0     LEFT = 1    RIGHT = 2
+     */
     public int getpaddleMoving(){
         return paddleMoving;
     }
 
+    /**
+     * return the speed of the paddle
+     * @return
+     */
     public float getPaddleSpeed() {
         return paddleSpeed;
     }
 
-    // This update method will be called from update in BreakoutView
-    // It determines if the paddle needs to move and changes the coordinates
-    // contained in rect if necessary
+    /**
+     * This update method will be called from update in BreakoutView
+     * It determines if the paddle needs to move and changes the coordinates
+     * contained in rect if necessary
+     * @param fps
+     */
     public void update(long fps){
         if(paddleMoving == LEFT && x > 0){
             x = x - paddleSpeed / fps;

@@ -10,7 +10,6 @@ public class Coin extends RectF {
     private float height;
 
     private float x;
-    private int screenX;
     private float y;
 
     private boolean isVisible;
@@ -24,39 +23,51 @@ public class Coin extends RectF {
         return isVisible;
     }
 
-
+    /**
+     * return the Lenght of the Coin
+     * @return
+     */
     public float getLength() {
         return length;
     }
 
-    public void setLength(float length) {
-        this.length = length;
-    }
-
+    /**
+     * return the height of the coin
+     * @return
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * set the height of the coin
+     * @param height
+     */
     public void setHeight(float height) {
         this.height = height;
     }
 
+    /**
+     * return the x coordinate of the coin
+     * @return
+     */
     public float getX() {
         return x;
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
-
+    /**
+     * return the y coordinate of the coin
+     * @return
+     */
     public float getY() {
         return y;
     }
 
-    public void setY(float y) {
-        this.y = y;
-    }
-
+    /**
+     * Constructor for a Coin object
+     * @param screenX
+     * @param screenY
+     */
     public Coin(int screenX, int screenY){
         // 130 pixels wide and 20 pixels high
         length = 100;
