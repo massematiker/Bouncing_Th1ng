@@ -25,7 +25,6 @@ public class Obstacle {
 
 
     // Which ways can the obstacles move
-
     public final int STOPPED = 0;
     public final int LEFT = 1;
     public final int RIGHT = 2;
@@ -36,8 +35,8 @@ public class Obstacle {
         this.obstacleMoving = obstacleMoving;
     }
 
-    // Is the paddle moving and in which direction
-    private int obstacleMoving = UP;
+    // Is the obstacle moving and in which direction
+    private int obstacleMoving ;
 
     private int obstacleSpeed = 100;
 
@@ -47,7 +46,6 @@ public class Obstacle {
         int padding = 10;
 
         obstacleMoving = (int)((Math.random() * 100) % 3);
-
 
         this.column = column;
         left=column * width + padding;
@@ -78,14 +76,7 @@ public class Obstacle {
         return isVisible;
     }
 
-    public int getObstacleMoving() {
-        return obstacleMoving;
-    }
-
     public void update(long fps){
-
-        float length = right -left;
-
 
         if(obstacleMoving == LEFT ){
             left = left - obstacleSpeed / fps;
