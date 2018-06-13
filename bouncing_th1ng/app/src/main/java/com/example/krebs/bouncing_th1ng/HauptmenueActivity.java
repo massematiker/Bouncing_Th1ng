@@ -54,6 +54,7 @@ public class HauptmenueActivity extends Activity {
                 name = nameinput.getText().toString();
 
 
+
                 // get The Name and save
                 gamePrefs = getSharedPreferences(GAME_PREFS, 0);
                 SharedPreferences.Editor nameEdit = gamePrefs.edit();

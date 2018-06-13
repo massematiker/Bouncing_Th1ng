@@ -159,7 +159,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         Bitmap boostpic3;
         Bitmap obstaclepic;
         Bitmap destroyableobstaclepic;
-        Bitmap keyboardbluepic;
+        Bitmap boostedpic;
 
         //booleans for the ball direction
         boolean ballAlternateDirection = false;
@@ -282,6 +282,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
             boostpic3 = BitmapFactory.decodeResource(getResources(), R.drawable.logitech);
             obstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.ps4);
             destroyableobstaclepic = BitmapFactory.decodeResource(getResources(), R.drawable.xbox);
+            boostedpic = BitmapFactory.decodeResource(getResources(), R.drawable.boosted);
 
 
             // Initialize ourHolder and paint objects
@@ -930,6 +931,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 boostpic3 = createScaledBitmap(boostpic3, 180, 100, false );
                 obstaclepic = createScaledBitmap(obstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
                 destroyableobstaclepic = createScaledBitmap(destroyableobstaclepic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
+                boostedpic = createScaledBitmap(boostedpic,300,300,false);
 
 
                 // Draw the background
@@ -937,9 +939,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 canvas.drawBitmap(background, (0), (0), null);
 
                 if(boosted1||boosted2||boosted3){
-                    paint.setTextSize(80);
-                    paint.setColor(Color.argb(255,  0, 0, 255));
-                    canvas.drawText("Boosted", (screenX/2)-140,screenY/3, paint);
+                    canvas.drawBitmap(boostedpic, (screenX/2)-140,(screenY/3)-150,null);
                 }
 
                 // Choose the brush color for drawing
