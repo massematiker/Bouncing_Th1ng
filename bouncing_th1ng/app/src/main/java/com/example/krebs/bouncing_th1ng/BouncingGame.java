@@ -368,10 +368,10 @@ public class BouncingGame extends Activity implements SensorEventListener {
          //   soundPool.setLoop(backgroundSound,99); //TODO
        /*     mediaPlayer = MediaPlayer.create(getContext(),R.raw.background8bit);
             mediaPlayer.setVolume(0.5f,0.5f );
-            mediaPlayer.start();
+            mediaPlayer.start(); */
 
             createObstaclesAndRestart();
-*/
+
         }
 
         /**
@@ -584,8 +584,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             // if the obstacel boost is not acticated
                             if(!boosted3) {
                                 // reset the y position of the ball to a defined position
-                                if(collidesFromBottom && ball.getyVelocity()<0)ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
-                                if(collidesFromTop&& ball.getyVelocity()>0)ball.clearObstacleY(obstacles[i].getRect().top);
+                                if(collidesFromBottom && ball.getyVelocity()<0) ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
+                                if(collidesFromTop&& ball.getyVelocity()>0) ball.clearObstacleY(obstacles[i].getRect().top);
 
                                 // play the colliding sound
                                 soundPool.play(obstacleSound, 1, 1, 0, 0, 1);
@@ -680,10 +680,12 @@ public class BouncingGame extends Activity implements SensorEventListener {
             for(int i=0;i<numcoins;i++) {
                 if (RectF.intersects(ball.getRect(), coins[i].getRect())) {
                     coins[i].setInvisible();
-                    // double of points if boosted2 is true
-                    if(boosted2) score += 10;
-                    // normaler Punktgewinn
-                    else score += 5;
+                    if(lives > 0) {
+                        // double of points if boosted2 is true
+                        if (boosted2) score += 10;
+                            // normaler Punktgewinn
+                        else score += 5;
+                    }
                     boolean repeat = true;
 
                     while(repeat){
@@ -740,7 +742,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 ball.makeballFaster();
 
                 // if all lives are lost
-                if(lives == 0){
+                if(lives <= 0){
                     paused = true;
 
                     SharedPreferences.Editor scoreEdit = gamePrefs.edit();
@@ -948,6 +950,10 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
         // Draw the newly updated scene
         public void draw() {
+            // Has the player lost?
+            if(lives <= 0){
+                startActivity(new Intent(BouncingGame.this, GameOverActivity.class));
+            }
 
             // Make sure our drawing surface is valid or we crash
             if (ourHolder.getSurface().isValid()) {
@@ -965,6 +971,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 boostPic2 = createScaledBitmap(boostPic2, 140, 90, false );
                                                             // Put here the dimensions from Boost - Case 3
                 boostPic3 = createScaledBitmap(boostPic3, 180, 100, false );
+
                 obstaclePic = createScaledBitmap(obstaclePic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
                 destroyableObstaclePic = createScaledBitmap(destroyableObstaclePic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
 
@@ -1016,9 +1023,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     // Counts every secound +1
                     if (timer >=4) {
                         paused = false;
-                        playTime++;
-                        if (boosted2) score +=2;
-                        else score++;
+                        if(lives > 0) {
+                            playTime++;
+                            if (boosted2) score += 2;
+                            else score++;
+                        }
                     }
                 }
 
@@ -1106,10 +1115,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     canvas.drawText("YOU HAVE WON!", 10,screenY/2, paint);
                 }
 
-                // Has the player lost?
-                if(lives <= 0){
-                    //do nothing
-                }
+
 
 
                 //show the countdown

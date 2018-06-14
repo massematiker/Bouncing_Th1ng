@@ -14,9 +14,7 @@ public class Obstacle {
     private float right;
     private float width;
 
-    public float getWidth() {
-        return width;
-    }
+
 
     private float height;
     private int screenX;
@@ -120,4 +118,9 @@ public class Obstacle {
     public float getHeight() {
         return height;
     }
+
+    public float getWidth() {
+        return width;
+    }
+
 }
