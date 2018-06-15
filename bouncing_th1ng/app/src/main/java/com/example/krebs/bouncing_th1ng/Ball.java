@@ -33,6 +33,7 @@ public class Ball {
      * @param fps Frames per Secound to keep the moving constant
      */
     public void update(long fps){
+
         rect.left = rect.left + (xVelocity / fps);
         rect.top = rect.top + (yVelocity / fps);
         rect.right = rect.left + ballWidth;

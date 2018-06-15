@@ -60,7 +60,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
     boolean boosted3=false;
 
     MediaPlayer mediaPlayer;
-    boolean playBackgroundMusic = true;
+    boolean playBackgroundMusic = false;
 
     boolean touch = true;
 
@@ -365,8 +365,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 Log.e("error", "failed to load sound files");
             }
 
+            mediaPlayer = MediaPlayer.create(getContext(),R.raw.background8bit);
             if(playBackgroundMusic){
-                mediaPlayer = MediaPlayer.create(getContext(),R.raw.background8bit);
                 mediaPlayer.setVolume(0.4f,0.4f );
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
@@ -538,6 +538,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     destObstacles--;
                 }
             }
+            System.gc();
         }//createnewObstacles
 
         @Override
@@ -555,6 +556,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 // Draw the frame
                 draw();
+
 
                 // Calculate the fps this frame
                 // We can then use the result to
@@ -1006,6 +1008,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                 //Counter for noboost // counts every secound
                 if ((System.currentTimeMillis()-startTime)/1000>timer){
+
                     timer++;
                     timerView--;
                     noBoost--;
@@ -1154,9 +1157,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
             } catch (InterruptedException e) {
                 Log.e("Error:", "joining thread");
             }
-            if (mediaPlayer.isPlaying()) {
+
+            if (mediaPlayer != null &&mediaPlayer.isPlaying()) {
                 mediaPlayer.stop();
             }
+
 
         }
 
@@ -1168,9 +1173,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
             playing = true;
             gameThread = new Thread(this);
             gameThread.start();
+
             if (playBackgroundMusic && !mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
             }
+
         }
 
 
