@@ -981,8 +981,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 // Choose the brush color for drawing
                 paint.setColor(Color.argb(255,  255, 255, 255));
                 //System.out.println(paddle.getPaddleSpeed()); == 350
-                if (boosted1){ paddle.setPaddleSpeed(800);}
-                else paddle.setPaddleSpeed(450);
+                if (boosted1){ paddle.setPaddleSpeed(900);}
+                else paddle.setPaddleSpeed(500);
                 // Draw the paddle
                 if(boosted1){
                     canvas.drawBitmap(paddlePicBlue, paddle.getX(),paddle.getY(),null);
@@ -1008,7 +1008,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     }
                     if (boost.getBoostTime()>boostVisible){
                         boost.setInvisible();
-                        noBoost=5;
+                        if(playTime<90) noBoost=5;
+                        else if (playTime<120) noBoost=3;
+                        else if (playTime>=150) noBoost=1;
                         boost = new Boost(screenX, screenY);
                     }
 

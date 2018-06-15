@@ -74,7 +74,7 @@ public class Coin extends RectF {
         height = 100;
 
         x = (float) (screenX/((Math.random()*100%4.8)+1.2));
-        y = (float) (screenY/((Math.random()*100%2.6)+1.4));
+        y = (float) (screenY/((Math.random()*100%3.5)+1.4));
 
         isVisible=true;
 
