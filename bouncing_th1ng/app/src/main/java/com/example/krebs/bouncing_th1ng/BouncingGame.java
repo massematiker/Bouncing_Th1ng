@@ -664,9 +664,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 if(ball.getyVelocity()>0){
                     ball.reverseYVelocity();
                     ball.clearObstacleY(paddle.getRect().top - 2);
-                    soundPool.play(paddleSound, 1, 1, 0, 0, 1);
                 }
-
+                soundPool.play(paddleSound, 1, 1, 0, 0, 1);
             }// Collission Ball and Paddle
 
             // Check for ball colliding with coins
