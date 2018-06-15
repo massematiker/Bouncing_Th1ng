@@ -152,6 +152,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         Bitmap obstaclePic;
         Bitmap destroyableObstaclePic;
 
+        boolean isBitmapScaled = false;
         //booleans for the ball direction
         boolean ballAlternateDirection = false;
 
@@ -239,19 +240,21 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             // Bitmap initialisieren
 
-            boostedPic = BitmapFactory.decodeResource(getResources(), R.drawable.boosted);
-            ballPic = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
-            ballPicBlue = BitmapFactory.decodeResource(getResources(), R.drawable.pacmanblue);
-            backgroundPic = BitmapFactory.decodeResource(getResources(), R.drawable.gameboy);
-            paddlePic = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardred);
-            paddlePicBlue = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardblue);
-            coinPic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
-            coinPicBlue = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoinblue);
-            boostPic1 = BitmapFactory.decodeResource(getResources(), R.drawable.clubmate);
-            boostPic2 = BitmapFactory.decodeResource(getResources(), R.mipmap.rasperry);
-            boostPic3 = BitmapFactory.decodeResource(getResources(), R.drawable.logitech);
-            obstaclePic = BitmapFactory.decodeResource(getResources(), R.drawable.ps4);
-            destroyableObstaclePic = BitmapFactory.decodeResource(getResources(), R.drawable.xbox);
+                boostedPic = BitmapFactory.decodeResource(getResources(), R.drawable.boosted);
+                ballPic = BitmapFactory.decodeResource(getResources(), R.drawable.pacman);
+                ballPicBlue = BitmapFactory.decodeResource(getResources(), R.drawable.pacmanblue);
+                backgroundPic = BitmapFactory.decodeResource(getResources(), R.drawable.gameboy);
+                paddlePic = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardred);
+                paddlePicBlue = BitmapFactory.decodeResource(getResources(), R.drawable.keyboardblue);
+                coinPic = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoin);
+                coinPicBlue = BitmapFactory.decodeResource(getResources(), R.drawable.bitcoinblue);
+                boostPic1 = BitmapFactory.decodeResource(getResources(), R.drawable.clubmate);
+                boostPic2 = BitmapFactory.decodeResource(getResources(), R.mipmap.rasperry);
+                boostPic3 = BitmapFactory.decodeResource(getResources(), R.drawable.logitech);
+                obstaclePic = BitmapFactory.decodeResource(getResources(), R.drawable.ps4);
+                destroyableObstaclePic = BitmapFactory.decodeResource(getResources(), R.drawable.xbox);
+
+
 
             // Initialize ourHolder and paint objects
             ourHolder = getHolder();
@@ -943,18 +946,27 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
 
 
-                boostedPic = createScaledBitmap(boostedPic,300,300,false);
+                if(!isBitmapScaled){
+                    boostedPic = createScaledBitmap(boostedPic,300,300,false);
 
-                backgroundPic = createScaledBitmap(backgroundPic,screenX,screenY,false);
-                                                            // Put here the dimensions from Boost - Case 1
-                boostPic1 = createScaledBitmap(boostPic1, 50, 190, false );
-                                                            // Put here the dimensions from Boost - Case 2
-                boostPic2 = createScaledBitmap(boostPic2, 140, 90, false );
-                                                            // Put here the dimensions from Boost - Case 3
-                boostPic3 = createScaledBitmap(boostPic3, 180, 100, false );
+                    backgroundPic = createScaledBitmap(backgroundPic,screenX,screenY,false);
+                    // Put here the dimensions from Boost - Case 1
+                    boostPic1 = createScaledBitmap(boostPic1, 50, 190, false );
+                    // Put here the dimensions from Boost - Case 2
+                    boostPic2 = createScaledBitmap(boostPic2, 140, 90, false );
+                    // Put here the dimensions from Boost - Case 3
+                    boostPic3 = createScaledBitmap(boostPic3, 180, 100, false );
+                    obstaclePic = createScaledBitmap(obstaclePic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
+                    destroyableObstaclePic = createScaledBitmap(destroyableObstaclePic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
 
-                obstaclePic = createScaledBitmap(obstaclePic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
-                destroyableObstaclePic = createScaledBitmap(destroyableObstaclePic, (int) (obstacles[0].getWidth() *0.9),(int) (obstacles[0].getHeight() *0.8),false);
+                    paddlePicBlue = createScaledBitmap(paddlePicBlue, (int)paddle.getlength(),(int) paddle.getheight(),false);
+                    paddlePic = createScaledBitmap(paddlePic, (int)paddle.getlength(),(int) paddle.getheight(),false);
+                    ballPicBlue = createScaledBitmap(ballPicBlue, (int) ball.ballWidth, (int) ball.ballHeight,false);
+                    ballPic = createScaledBitmap(ballPic, (int) ball.ballWidth, (int) ball.ballHeight,false);
+                    coinPicBlue = createScaledBitmap(coinPicBlue, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
+                    coinPic = createScaledBitmap(coinPic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
+                    isBitmapScaled = true;
+                }
 
 
 
@@ -973,11 +985,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 else paddle.setPaddleSpeed(450);
                 // Draw the paddle
                 if(boosted1){
-                    paddlePicBlue = createScaledBitmap(paddlePicBlue, (int)paddle.getlength(),(int) paddle.getheight(),false);
                     canvas.drawBitmap(paddlePicBlue, paddle.getX(),paddle.getY(),null);
                 }
                 else{
-                    paddlePic = createScaledBitmap(paddlePic, (int)paddle.getlength(),(int) paddle.getheight(),false);
                     canvas.drawBitmap(paddlePic, paddle.getX(),paddle.getY(),null);
                 }
 
@@ -1020,11 +1030,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
                 // Draw the ball
                 if(boosted3){
-                    ballPicBlue = createScaledBitmap(ballPicBlue, (int) ball.ballWidth, (int) ball.ballHeight,false);
                     canvas.drawBitmap(ballPicBlue, ball.rect.left,ball.rect.bottom,null);
                 }
                 else{
-                    ballPic = createScaledBitmap(ballPic, (int) ball.ballWidth, (int) ball.ballHeight,false);
                     canvas.drawBitmap(ballPic, ball.rect.left,ball.rect.bottom,null);
                 }
 
@@ -1032,11 +1040,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 for (int i=0; i<numcoins; i++) {
                     if (coins[i].getVisibility()) {
                         if (boosted2){
-                            coinPicBlue = createScaledBitmap(coinPicBlue, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
                             canvas.drawBitmap(coinPicBlue, coins[i].getX(), coins[i].getY(), null);
                         }
                         else {
-                            coinPic = createScaledBitmap(coinPic, (int) coins[1].getLength(),(int) coins[1].getHeight(),false);
                             canvas.drawBitmap(coinPic, coins[i].getX(), coins[i].getY(), null);
                         }
                     }
