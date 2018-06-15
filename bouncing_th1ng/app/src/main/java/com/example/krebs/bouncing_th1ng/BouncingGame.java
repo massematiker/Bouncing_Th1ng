@@ -497,7 +497,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
             }
             // minimum 5 undestroyable obstacles
-            while(obstaclesCount<=3){
+            while(obstaclesCount<=2){
                 int i =(int)((Math.random()*100)%numObstacles);
                 if(!obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
                     obstacles[i].setVisible();
@@ -505,7 +505,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
             }
             //max 6 undestroyable obstacles
-            while(obstaclesCount>4){
+            while(obstaclesCount>3){
                 int i =(int)((Math.random()*100)%numObstacles);
                 if(obstacles[i].getVisibility()  && !(obstacles[i] instanceof DestroyableObstacle)){
                     obstacles[i].setInvisible();
