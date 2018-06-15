@@ -5,37 +5,24 @@ import android.graphics.RectF;
 public class Obstacle {
 
     private RectF rect;
-
     private boolean isVisible;
-
     private float left;
     private float top;
     private float bottom;
     private float right;
     private float width;
-
-
-
     private float height;
     private int screenX;
     private int row;
     private int column;
-
-
     // Which ways can the obstacles move
     public final int STOPPED = 0;
     public final int LEFT = 1;
     public final int RIGHT = 2;
     public final int UP = 3;
     public final int DOWN = 4;
-
-    public void setObstacleMoving(int obstacleMoving) {
-        this.obstacleMoving = obstacleMoving;
-    }
-
     // Is the obstacle moving and in which direction
     private int obstacleMoving ;
-
     private int obstacleSpeed = 100;
 
     public Obstacle(int row, int column, int width, int height){
@@ -60,7 +47,9 @@ public class Obstacle {
                 right,
                 bottom);
     }
-
+    public void setObstacleMoving(int obstacleMoving) {
+        this.obstacleMoving = obstacleMoving;
+    }
     public RectF getRect(){
         return this.rect;
     }
