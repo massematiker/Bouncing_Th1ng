@@ -59,7 +59,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
     boolean boosted2=false;
     boolean boosted3=false;
 
-    
+    MediaPlayer mediaPlayer;
+    boolean playBackgroundMusic = true;
+
     boolean touch = true;
 
     // Create the Sensors
@@ -213,9 +215,10 @@ public class BouncingGame extends Activity implements SensorEventListener {
         int gameOverDeath =-1;
         int obstacleSound = -1;
         int paddleSound = -1;
-        int backgroundSound = -1;
+
 
         MediaPlayer mediaPlayer;
+
         // The score
         int score = 0;
 
@@ -314,8 +317,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 descriptor = assetManager.openFd("click.ogg");
                 mouse = soundPool.load(descriptor, 0);
 
-                descriptor = assetManager.openFd("background8bit.ogg");
-                backgroundSound = soundPool.load(descriptor, 0);
 
             }catch(IOException e){
                 // Print an error message to the console
@@ -326,6 +327,14 @@ public class BouncingGame extends Activity implements SensorEventListener {
        /*     mediaPlayer = MediaPlayer.create(getContext(),R.raw.background8bit);
             mediaPlayer.setVolume(0.5f,0.5f );
             mediaPlayer.start(); */
+
+            if(playBackgroundMusic){
+                mediaPlayer = MediaPlayer.create(getContext(),R.raw.background8bit);
+                mediaPlayer.setVolume(0.4f,0.4f );
+                mediaPlayer.setLooping(true);
+                mediaPlayer.start();
+            }
+
 
             createObstaclesAndRestart();
         }
@@ -358,6 +367,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 paddle.setPaddleSpeed((float)speed);
             }
         }
+
 
         /**
          * create all obstacles new and start a new game
@@ -551,6 +561,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             // Move the paddle if required
             paddle.update(fps);
+
 
             // Check for obstacle colliding
             for(int i = 0; i < numObstacles; i++){
@@ -1109,6 +1120,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
             } catch (InterruptedException e) {
                 Log.e("Error:", "joining thread");
             }
+
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+
         }
 
         /**
@@ -1119,6 +1135,9 @@ public class BouncingGame extends Activity implements SensorEventListener {
             playing = true;
             gameThread = new Thread(this);
             gameThread.start();
+            if (playBackgroundMusic && !mediaPlayer.isPlaying()) {
+                mediaPlayer.start();
+            }
         }
 
         /**
