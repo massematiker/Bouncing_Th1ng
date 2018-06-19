@@ -67,12 +67,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
+        android:id="@+id/cbBackgroundMusic"
+        android:layout_width="175dp"
+        android:layout_height="32dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="48dp"
+        android:text="Hintergrundmusik"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cbTouch"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Hintergrundmusik" />
+
+    <CheckBox
         android:id="@+id/cbHilfeScreen"
         android:layout_width="151dp"
         android:layout_height="32dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="78dp"
+        android:layout_marginEnd="-165dp"
+        android:layout_toStartOf="@+id/nameinput"
         android:text="Hilfe anzeigen"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +98,8 @@
         android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/highscorebutton"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="186dp"
         android:text="Neigungssteureung"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"

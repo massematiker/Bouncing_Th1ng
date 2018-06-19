@@ -14,8 +14,10 @@ public class HauptmenueActivity extends Activity {
     private EditText nameInput;
     private boolean playTouch;
     private boolean helpMenu;
+    private boolean backgroundMusic;
     private CheckBox checkBoxTouch;
     private CheckBox checkBoxHelp;
+    private CheckBox checkBoxBackgroundMusic;
 
     private SharedPreferences gamePrefs;
     public static final String GAME_PREFS = "ArithmeticFile";
@@ -49,12 +51,12 @@ public class HauptmenueActivity extends Activity {
                 checkBoxTouch = (CheckBox) findViewById(R.id.cbTouch);
                 playTouch = checkBoxTouch.isChecked();
                 checkBoxHelp = (CheckBox) findViewById(R.id.cbHilfeScreen);
+                checkBoxBackgroundMusic = (CheckBox) findViewById(R.id.cbBackgroundMusic);
                 helpMenu = checkBoxHelp.isChecked();
-
+                backgroundMusic = checkBoxBackgroundMusic.isChecked();
 
                 nameInput = (EditText) findViewById(R.id.nameinput);
                 name = nameInput.getText().toString();
-
 
 
                 // get The Name and save
@@ -63,6 +65,7 @@ public class HauptmenueActivity extends Activity {
 
                 nameEdit.putString("name",name);
                 nameEdit.putBoolean("touch",playTouch);
+                nameEdit.putBoolean("backgroundMusic",backgroundMusic);
                 nameEdit.commit();
 
 

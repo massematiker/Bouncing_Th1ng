@@ -95,6 +95,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
         //Initilization for the HighScore
         gamePrefs = getSharedPreferences(GAME_PREFS, 0);
         touch = gamePrefs.getBoolean("touch",false);
+        playBackgroundMusic = gamePrefs.getBoolean("backgroundMusic", false);
 
         setContentView(bouncingView);
     }
@@ -119,7 +120,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     break;
                 case Surface.ROTATION_270:
                     bouncingView.setPaddleMove(-event.values[1]);
-                    ;
+
                     break;
             }
         }
