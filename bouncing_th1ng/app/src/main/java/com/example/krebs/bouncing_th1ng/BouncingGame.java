@@ -920,13 +920,6 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 ball.clearObstacleX(screenX - 44);
                 //soundPool.play(explodeID, 1, 1, 0, 0, 1);
             }
-
-            // Pause if cleared screen
-            if(score == numObstacles * 10){
-                paused = true;
-                createObstaclesAndRestart();
-            }
-
             // Update Ball
             ball.update(fps);
 
