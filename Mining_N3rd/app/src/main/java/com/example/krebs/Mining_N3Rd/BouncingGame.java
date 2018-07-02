@@ -748,6 +748,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
                     SharedPreferences.Editor scoreEdit = gamePrefs.edit();
 
+                    scoreEdit.putInt("currentScore", score);
+
                     // Fill the HighScore List if the game was one of the five best
                     // If Score is not filled
                     if(!gamePrefs.contains("1")){

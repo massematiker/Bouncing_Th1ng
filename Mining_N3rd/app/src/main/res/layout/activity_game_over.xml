@@ -41,4 +41,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="53dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:layout_toStartOf="@+id/menubutton"
+        android:text="Your Score:    "
+        android:textSize="30sp"
+        tools:text="Your Score:    " />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="112dp"
+        android:layout_height="51dp"
+        android:layout_alignStart="@+id/menubutton"
+        android:layout_alignTop="@+id/textView2"
+        android:textSize="30sp" />
+
 </RelativeLayout>

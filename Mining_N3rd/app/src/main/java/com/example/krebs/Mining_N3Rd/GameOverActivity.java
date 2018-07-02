@@ -2,13 +2,19 @@ package com.example.krebs.Mining_N3Rd;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 
 import com.example.krebs.Mining_N3Rd.R;
 
 public class GameOverActivity extends Activity {
+
+    private SharedPreferences gamePrefs;
+    public static final String GAME_PREFS = "ArithmeticFile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +23,8 @@ public class GameOverActivity extends Activity {
         configureNewGameButton();
         configureMenuButton();
         configureHighScoreButton1();
+        configureScoreView();
+
     }
 
     private void configureNewGameButton(){
@@ -45,6 +53,13 @@ public class GameOverActivity extends Activity {
                 startActivity(new Intent(GameOverActivity.this, HighscoreActivity.class));
             }
         });
+    }
+
+    private void  configureScoreView(){
+        TextView score = (TextView) findViewById(R.id.score);
+        gamePrefs = getSharedPreferences(GAME_PREFS, 0);
+        score.setText(String.valueOf(gamePrefs.getInt("currentScore",0)));
+
     }
 
 }
