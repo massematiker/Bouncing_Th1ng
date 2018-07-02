@@ -1102,13 +1102,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 paint.setTextSize(40);
 
                 //if(boosted2) paint.setColor(Color.argb(255,  0, 0, 255));
-                canvas.drawText("Score: " + score + "   Lives: " + lives + "   Seconds Played: " + playTime + "  Gesammelte Boosts: "+boostScore, 10,50, paint);
-
-                // Has the player cleared the screen?
-                if(score == numObstacles * 10){
-                    paint.setTextSize(90);
-                    canvas.drawText("YOU HAVE WON!", 10,screenY/2, paint);
-                }
+                canvas.drawText("Score: " + score + "   Leben: " + lives + "   Spielzeit: " + playTime +" s", 15,50, paint);
 
                 //show the countdown
                 if (timer<6) {
@@ -1118,7 +1112,7 @@ public class BouncingGame extends Activity implements SensorEventListener {
                 }
                 if (timer==6){
                     paint.setTextSize(90);
-                    canvas.drawText("Go", screenX / 2, screenY / 2, paint);
+                    canvas.drawText("Los", screenX / 2, screenY / 2, paint);
                 }
 
                 // Draw everything to the screen
