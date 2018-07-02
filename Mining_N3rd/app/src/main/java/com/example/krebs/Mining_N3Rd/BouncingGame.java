@@ -334,9 +334,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
 
             if(playBackgroundMusic){
                 mediaPlayer.setVolume(0.4f,0.4f );
-                mediaPlayer.start();
                 mediaPlayer.setLooping(true);
-
+                mediaPlayer.start();
             }
 
 
@@ -567,12 +566,15 @@ public class BouncingGame extends Activity implements SensorEventListener {
         // Movement, collision detection etc.
         public void update() {
 
+<<<<<<< HEAD:Mining_N3rd/app/src/main/java/com/example/krebs/Mining_N3Rd/BouncingGame.java
             if(!mediaPlayer.isPlaying() && playBackgroundMusic){
                 mediaPlayer = MediaPlayer.create(getContext(),R.raw.background8bit);
                 mediaPlayer.start();
                 mediaPlayer.setLooping(true);
             }
 
+=======
+>>>>>>> parent of f65400f... Merge branch 'master' of https://github.com/massematiker/Bouncing_Th1ng:bouncing_th1ng/app/src/main/java/com/example/krebs/bouncing_th1ng/BouncingGame.java
             // Move the paddle if required
             paddle.update(fps);
 
@@ -587,21 +589,19 @@ public class BouncingGame extends Activity implements SensorEventListener {
                     boolean collidesFromBottom = ball.getRect().top<= obstacles[i].getRect().bottom && ball.getRect().bottom >= obstacles[i].getRect().bottom;
                     boolean collidesInX = ball.getRect().left <= obstacles[i].getRect().right && ball.getRect().right >=obstacles[i].getRect().left;
                     boolean collidesFromTop = ball.getRect().bottom>= obstacles[i].getRect().top && ball.getRect().top <= obstacles[i].getRect().bottom;
-                    if( collidesInX &&(collidesFromBottom || collidesFromTop) ) {
+                    if( collidesInX &&(collidesFromBottom || collidesFromTop) ){
 
                         // if the obstacel boost is not acticated
-                        if (!boosted3) {
+                        if(!boosted3) {
                             // reset the y position of the ball to a defined position
-                            if (collidesFromBottom && ball.getyVelocity() < 0)
-                                ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
-                            if (collidesFromTop && ball.getyVelocity() > 0)
-                                ball.clearObstacleY(obstacles[i].getRect().top);
+                            if(collidesFromBottom && ball.getyVelocity()<0) ball.clearObstacleY(obstacles[i].getRect().bottom + 24);
+                            if(collidesFromTop&& ball.getyVelocity()>0) ball.clearObstacleY(obstacles[i].getRect().top);
 
                             // play the colliding sound
                             soundPool.play(obstacleSound, 1, 1, 0, 0, 1);
                             //bounce the ball
                             ball.reverseYVelocity();
-
+                        }
                         // create a new destroyable Obstacle if one is destroyed
                         if (obstacles[i] instanceof DestroyableObstacle) {
                             obstacles[i].setInvisible();
@@ -609,8 +609,8 @@ public class BouncingGame extends Activity implements SensorEventListener {
                             boolean contiueLoop = true;
 
                             // while no new obstable is created
-                            while (contiueLoop) {
-                                int j = (int) ((Math.random() * 100) % numObstacles);
+                            while(contiueLoop){
+                                int j =(int)((Math.random()*100)%numObstacles);
                                 boolean intersects = false;
                                 for (int k = 0; k < numObstacles; k++) {
                                     if (k == j) continue;
@@ -619,12 +619,11 @@ public class BouncingGame extends Activity implements SensorEventListener {
                                         intersects = true;
                                 }
                                 if (intersects) continue;
-                                obstacles[j] = new DestroyableObstacle(obstacles[j].getRow(), obstacles[j].getColumn(), (int) obstacles[j].getWidth(), (int) obstacles[j].getHeight());
+                                obstacles[j] = new DestroyableObstacle(obstacles[j].getRow(),obstacles[j].getColumn(),(int)obstacles[j].getWidth(),(int)obstacles[j].getHeight());
                                 obstacles[j].setVisible();
                                 contiueLoop = false;
                             }
                         }
-                    }
                     }
                 }//with a ball
 
